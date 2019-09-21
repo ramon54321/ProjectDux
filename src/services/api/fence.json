@@ -1,0 +1,4 @@
+{
+  "tags": ["api"],
+  "exports": ["index"]
+}
