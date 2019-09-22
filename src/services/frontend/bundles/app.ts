@@ -4,4 +4,11 @@ import App from '../components/App'
 
 console.log('This is on the frontend')
 
-// ReactDOM.hydrate(React.createElement(App, {bundlePath: 'sdf'}), document.getElementsByTagName('body'))
+const initialProps = (window as any).__PRELOADED_STATE__
+
+console.log(initialProps)
+
+ReactDOM.hydrate(
+  React.createElement(App, initialProps),
+  document.getElementById('reactroot'),
+)

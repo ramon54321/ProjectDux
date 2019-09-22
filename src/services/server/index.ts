@@ -1,8 +1,4 @@
-import {
-  renderComponentByName,
-  getBundleByName,
-  getViewByName,
-} from './connectors/frontend'
+import { getBundleByName, renderViewByName } from './connectors/frontend'
 
 /***
  * This file is the main interface to the outside.
@@ -27,9 +23,12 @@ app.use(require('cookie-parser')())
 
 // Controllers
 app.get('/', async (req, res) => {
-  const response = await getViewByName('index', {
-    name: 'Elizabeth',
+  const response = await renderViewByName('index', {
+    component: 'App',
     bundle: 'app',
+    initialState: {
+      age: 78,
+    },
   })
   return response ? res.send(response) : res.status(404).send()
 })

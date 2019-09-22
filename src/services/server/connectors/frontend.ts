@@ -1,18 +1,6 @@
 import axios from 'axios'
 import { HOST_FRONTEND } from '../../../common/constants'
 
-export async function renderComponentByName(
-  componentName: Frontend.Components.Name,
-  props,
-): Promise<string> {
-  const params = new URLSearchParams(props).toString()
-  const url = `${HOST_FRONTEND}render/${componentName}?${params}`
-  return axios
-    .get(url)
-    .then(res => res.data)
-    .catch(_ => console.error(`Unknown component requested: ${componentName}`))
-}
-
 export async function getBundleByName(
   bundleName,
 ): Promise<string> {
@@ -23,14 +11,13 @@ export async function getBundleByName(
     .catch(_ => console.error(`Unknown bundle requested: ${bundleName}`))
 }
 
-export async function getViewByName(
-  viewName,
-  props,
+export async function renderViewByName(
+  viewName: Frontend.Views.Name,
+  props: Frontend.Views.Props,
 ): Promise<string> {
-  const params = new URLSearchParams(props).toString()
-  const url = `${HOST_FRONTEND}view/${viewName}?${params}`
+  const url = `${HOST_FRONTEND}view/${viewName}`
   return axios
-    .get(url)
+    .post(url, props)
     .then(res => res.data)
     .catch(_ => console.error(`Unknown view requested: ${viewName}`))
 }
