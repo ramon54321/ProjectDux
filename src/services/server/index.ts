@@ -1,4 +1,8 @@
+const app = require('express')()
+require('express-ws')(app)
+
 import { getBundleByName, renderViewByName } from './connectors/frontend'
+import routerSocket from './controller/socket'
 
 /***
  * This file is the main interface to the outside.
@@ -15,8 +19,6 @@ import { getBundleByName, renderViewByName } from './connectors/frontend'
  * The job of the 'index' file is purly to set up the listener (usually http), and mount
  * the routes from the Controller to the listener.
  */
-
-const app = require('express')()
 
 // Middleware
 app.use(require('cookie-parser')())
@@ -38,6 +40,11 @@ app.get('/bundle/:bundleName', async (req, res) => {
   const response = await getBundleByName(bundleName)
   return response ? res.send(response) : res.status(404).send()
 })
+
+app.use(routerSocket)
+
+// Model
+require('./model/game')
 
 // Listen
 app.listen(8000)
