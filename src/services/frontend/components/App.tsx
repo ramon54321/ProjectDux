@@ -1,25 +1,24 @@
 import * as React from 'react'
-import store from '../../../common/store/model/store'
-import * as Actions from '../../../common/store/model/actions'
+import getStore from '../game/store'
+import { log } from '../game/connectors/requestActions'
 
 export interface AppProps {
   age: number
 }
 
 export default class App extends React.Component<AppProps> {
-  spawn() {
-    store.dispatch(Actions.spawn('Jeff', 7))
+  refresh() {
+    console.log('Refreshing UI')
     this.forceUpdate()
   }
   render() {
     return (
       <React.Fragment>
         <div>Hello from Class app of age {this.props.age}</div>
-        <button onClick={() => this.spawn()}>Spawn</button>
+        <button onClick={() => this.refresh()}>Refresh</button>
+        <button onClick={() => log()}>Send Log</button>
         <pre>
-          <code>
-            {JSON.stringify(store.getState(), null, 2)}
-          </code>
+          <code>{JSON.stringify(getStore().getState(), null, 2)}</code>
         </pre>
       </React.Fragment>
     )

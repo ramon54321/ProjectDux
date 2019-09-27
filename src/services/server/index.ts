@@ -2,7 +2,7 @@ const app = require('express')()
 require('express-ws')(app)
 
 import { getBundleByName, renderViewByName } from './connectors/frontend'
-import routerSocket from './controller/socket'
+import routerSocket from './controller/sockets'
 
 /***
  * This file is the main interface to the outside.
@@ -43,8 +43,8 @@ app.get('/bundle/:bundleName', async (req, res) => {
 
 app.use(routerSocket)
 
-// Model
-require('./model/game')
+// Game
+require('./game')
 
 // Listen
 app.listen(8000)

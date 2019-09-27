@@ -12,7 +12,7 @@ interface Socket<T> {
   send: (message: string) => void
 }
 
-const webSocket = new WebSocket(HOST_SERVER_WS)
+const webSocket = typeof window !== 'undefined' ? new WebSocket(HOST_SERVER_WS) : {} as any
 const socket = (new EventEmitter() as any) as Socket<Events>
 
 webSocket.onopen = event => {
