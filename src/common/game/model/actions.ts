@@ -19,11 +19,10 @@ export const spawn = (id: string, name: string, level: number) => ({
   },
 })
 
-export const setPosition = (id: string, x: number, y: number) => ({
-  type: 'set_position',
+export const setWaypoints = (id: string, waypoints: Game.State.Timestamped<Game.State.Vector2>[]) => ({
+  type: 'set_waypoints',
   payload: {
     id: id,
-    x: x,
-    y: y,
+    waypoints: waypoints,
   }
 })

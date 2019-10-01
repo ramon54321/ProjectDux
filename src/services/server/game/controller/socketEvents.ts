@@ -1,7 +1,7 @@
 import { socketEvents } from '../../model/sockets'
 import { getShortId } from '../../utils/id'
-import { enqueue } from '../model/socketRequestActionQueue'
 import { dispatchFullStateToSocket } from '../model/store'
+import { socketRequestActionQueue } from '..'
 
 socketEvents.on('message', data => {
   const { id, message } = data
@@ -9,8 +9,7 @@ socketEvents.on('message', data => {
     id: id,
     requestAction: JSON.parse(message),
   }
-  enqueue(socketRequestAction)
-  // console.log(socketRequestAction)
+  socketRequestActionQueue.enqueue(socketRequestAction)
 })
 
 socketEvents.on('open', id => {

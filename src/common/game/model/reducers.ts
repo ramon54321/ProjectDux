@@ -1,20 +1,21 @@
 import { combineReducers } from 'redux'
 
-const unitsReducer = (current = [], action) => {
+const unitsReducer = (current: Game.State.Unit[] = [], action): Game.State.Unit[] => {
   if (action.type === 'spawn') {
-    const unit = {
-      ...action.payload,
-      x: 0,
-      y: 0,
+    const {id, name, level} = action.payload
+    const unit: Game.State.Unit = {
+      id: id,
+      name: name,
+      level: level,
+      waypoints: [],
     }
     return [...current, unit]
-  } else if (action.type === 'set_position') {
+  } else if (action.type === 'set_waypoints') {
     return current.map(unit => {
       if (unit.id === action.payload.id) {
         return {
           ...unit,
-          x: action.payload.x,
-          y: action.payload.y,
+          waypoints: action.payload.waypoints
         }
       }
       return unit

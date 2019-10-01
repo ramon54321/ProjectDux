@@ -1,10 +1,8 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import App from '../components/App'
 import socket from '../common/socket'
 import getStore from '../game/store'
-
-// UI After Connection
-import App from '../components/App'
 
 const initialProps = (window as any).__PRELOADED_STATE__
 

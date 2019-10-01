@@ -1,9 +1,9 @@
 import './controller/socketEvents'
 
-import { spawn, setPosition } from '../../../common/game/model/actions'
+import { spawn, setWaypoints } from '../../../common/game/model/actions'
 import { generateShortId } from '../utils/id'
 import { dispatch } from './model/store'
-import { dequeue } from './model/socketRequestActionQueue'
+import Queue from '../utils/queue'
 
 function applySocketRequestAction(socketRequestAction: Game.SocketRequestAction) {
   if (socketRequestAction.requestAction.type === 'log') {
@@ -11,15 +11,34 @@ function applySocketRequestAction(socketRequestAction: Game.SocketRequestAction)
   }
 }
 
-const store: any = {}
+export const socketRequestActionQueue = new Queue<Game.SocketRequestAction>()
+
+const testvars: any = {}
 
 const tickNumberProcesses = {
   5: () => {
-    store.jimmyId = generateShortId()
-    dispatch(spawn(store.jimmyId, 'Jimmy', 4))
+    testvars.jimmyId = generateShortId()
+    dispatch(spawn(testvars.jimmyId, 'Jimmy', 4))
   },
   8: () => {
-    dispatch(setPosition(store.jimmyId, 7, 9))
+    const timestamp = Date.now()
+    dispatch(setWaypoints(testvars.jimmyId, [
+      {
+        timestamp: timestamp,
+        x: 0,
+        y: 0,
+      },
+      {
+        timestamp: timestamp + 5000,
+        x: 10,
+        y: 0,
+      },
+      {
+        timestamp: timestamp + 10000,
+        x: 10,
+        y: 10,
+      },
+    ]))
   },
 }
 
@@ -28,11 +47,7 @@ setInterval(() => {
   console.log('Tick:', tickNumber)
 
   // Process Requests
-  let socketRequestAction = dequeue()
-  while (socketRequestAction) {
-    applySocketRequestAction(socketRequestAction)
-    socketRequestAction = dequeue()
-  }
+  socketRequestActionQueue.dequeueAll(applySocketRequestAction)
 
   // Process Model
   const process = tickNumberProcesses[tickNumber]
@@ -42,3 +57,5 @@ setInterval(() => {
 
   tickNumber++
 }, 1000)
+
+
