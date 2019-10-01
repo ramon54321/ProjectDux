@@ -1,4 +1,4 @@
-import { getPosition } from './position'
+import { mapPositionFromWaypoints } from './position'
 
 export function getAbsoluteState(
   discreetState: Game.DiscreetState.DiscreetState,
@@ -10,7 +10,7 @@ export function getAbsoluteState(
         id: unit.id,
         name: unit.name,
         level: unit.level,
-        position: getPosition(unit.waypoints, timestamp),
+        position: mapPositionFromWaypoints(unit.waypoints, timestamp),
       })),
     },
   }

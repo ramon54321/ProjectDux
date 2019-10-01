@@ -1,6 +1,6 @@
 import { inverseLerp, lerp } from "../../../utils/math"
 
-export function getPosition(
+export function mapPositionFromWaypoints(
   waypoints: Game.Waypoint[],
   timestamp: number,
 ): Game.Vector2 {

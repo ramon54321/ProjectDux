@@ -12,7 +12,7 @@
     "src/**/*.d.ts",
     "src/**/*.tsx"
   ],
-  "exclude": [
-    "src/**/bundles"
-  ]
+  // "exclude": [
+  //   "src/**/bundles"
+  // ]
 }
