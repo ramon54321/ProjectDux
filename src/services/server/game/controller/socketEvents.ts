@@ -5,7 +5,7 @@ import { socketRequestActionQueue } from '..'
 
 socketEvents.on('message', data => {
   const { id, message } = data
-  const socketRequestAction: Game.SocketRequestAction = {
+  const socketRequestAction: Game.RequestActions.SocketRequestAction = {
     id: id,
     requestAction: JSON.parse(message),
   }

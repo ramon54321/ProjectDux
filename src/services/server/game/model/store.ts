@@ -1,7 +1,7 @@
 import { AnyAction } from "redux"
 import createStore from '../../../../common/game/model/store'
 import { broadcast, send } from '../../model/sockets'
-import { fullState } from "../../../../common/game/model/actions"
+import { fullState } from "../../../../common/game/model/actions/actions"
 
 const store = createStore()
 
