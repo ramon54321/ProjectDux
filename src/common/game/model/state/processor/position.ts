@@ -1,4 +1,4 @@
-import { inverseLerp, lerp } from "../../../utils/math"
+import { inverseLerp, lerp } from "../../../../utils/math"
 
 export function mapPositionFromWaypoints(
   waypoints: Game.Waypoint[],

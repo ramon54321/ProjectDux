@@ -1,6 +1,6 @@
 import './controller/socketEvents'
 
-import Actions from '../../../common/game/model/actions/actions'
+import Actions from '../../../common/game/model/state/actions/actions'
 import { generateShortId } from '../utils/id'
 import { dispatch } from './model/store'
 import Queue from '../utils/queue'
