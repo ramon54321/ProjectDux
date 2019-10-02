@@ -5,17 +5,7 @@ import { generateShortId } from '../utils/id'
 import { dispatch, getServerAbsoluteState } from './model/store'
 import Queue from '../utils/queue'
 import { generateRandomName } from '../utils/names'
-
-function applySocketRequestAction(
-  socketRequestAction: Game.RequestActions.SocketRequestAction,
-) {
-  if (socketRequestAction.requestAction.type === 'log') {
-    console.log(
-      'Client Log:',
-      socketRequestAction.requestAction.payload.message,
-    )
-  }
-}
+import { applySocketRequestAction } from './model/requestActions'
 
 export const socketRequestActionQueue = new Queue<
   Game.RequestActions.SocketRequestAction

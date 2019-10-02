@@ -47,6 +47,9 @@ declare namespace Game {
       id: string
       requestAction: AnyRequestAction
     }
+    export type RequestActionMap = {
+      [P in keyof RequestActionPayloads]: (socketId: string, payload: RequestActionPayloads[P]) => any
+    }
   }
 
   export namespace Actions {
