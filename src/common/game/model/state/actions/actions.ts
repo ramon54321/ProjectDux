@@ -7,13 +7,22 @@ const spawn = (
   id: string,
   name: string,
   level: number,
+  position: Game.Vector2,
 ): Game.Actions.Action<'spawn'> => ({
   type: 'spawn',
   payload: {
     id: id,
     name: name,
     level: level,
+    position: position,
   },
+})
+
+const destroy = (id: string): Game.Actions.Action<'destroy'> => ({
+  type: 'destroy',
+  payload: {
+    id: id,
+  }
 })
 
 const setWaypoints = (
@@ -29,6 +38,7 @@ const setWaypoints = (
 
 const actions: Game.Actions.ActionMap = {
   spawn: spawn,
+  destroy: destroy,
   setWaypoints: setWaypoints,
 }
 

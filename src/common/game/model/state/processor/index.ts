@@ -1,4 +1,5 @@
 import { mapPositionFromWaypoints } from './position'
+import { mapProps } from '../../../../utils/mapping'
 
 export function getAbsoluteState(
   discreetState: Game.DiscreetState.DiscreetState,
@@ -6,7 +7,7 @@ export function getAbsoluteState(
   const timestamp = Date.now()
   return {
     world: {
-      units: discreetState.world.units.map(unit => ({
+      units: mapProps<Game.DiscreetState.Unit>(discreetState.world.units, unit => ({
         id: unit.id,
         name: unit.name,
         level: unit.level,

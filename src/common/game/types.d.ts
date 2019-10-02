@@ -2,7 +2,7 @@ declare namespace Game {
   export namespace DiscreetState {
     export interface DiscreetState {
       world: {
-        units: Unit[]
+        units: {[key: string]: Unit}
       }
     }
     export interface Unit {
@@ -16,7 +16,7 @@ declare namespace Game {
   export namespace AbsoluteState {
     export interface AbsoluteState {
       world: {
-        units: Unit[]
+        units: {[key: string]: Unit}
       }
     }
     export interface Unit {
@@ -50,11 +50,20 @@ declare namespace Game {
   }
 
   export namespace Actions {
+    export interface ActionCreators {
+      spawn: (id: string, name: string, level: number, position: Vector2) => Action<'spawn'>
+      destroy: (id: String) => Action<'destroy'>
+      setWaypoints: (id: string, waypoints: Waypoint[]) =>  Action<'setWaypoints'>
+    }
     export interface ActionPayloads {
       spawn: {
         id: string
         name: string
         level: number
+        position: Vector2
+      }
+      destroy: {
+        id: string
       }
       setWaypoints: {
         id: string
@@ -70,7 +79,7 @@ declare namespace Game {
       : never
     export type AnyAction = Action<ActionTypes>
     export type ActionMap = {
-      [P in keyof ActionPayloads]: (...args) => Action<P>
+      [P in keyof ActionPayloads]: ActionCreators[P]
     }
     export type ReducerMap = {
       [P in keyof ActionPayloads]: (current: any, payload: ActionPayloads[P]) => any
