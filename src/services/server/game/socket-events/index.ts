@@ -1,7 +1,7 @@
-import { socketEvents } from '../../model/sockets'
-import { getShortId } from '../../utils/id'
-import { dispatchFullStateToSocket } from '../connectors/dispatcher'
-import { socketRequestActionQueue } from '..'
+import { socketEvents } from '@server/model/sockets'
+import { getShortId } from '@server/utils/id'
+import { dispatchFullStateToSocket } from '@server/game/dispatcher'
+import { socketRequestActionQueue } from '@server/game'
 
 socketEvents.on('message', data => {
   const { id, message } = data

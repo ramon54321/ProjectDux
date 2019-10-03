@@ -1,7 +1,7 @@
 import { AnyAction } from "redux"
-import { broadcast, send } from '../../model/sockets'
-import { fullState } from "../../../../common/game/model/state/actions/actions"
-import { store } from "../model/state/store"
+import { fullState } from "@common/game/model/state/actions/actions"
+import { broadcast, send } from '@server/model/sockets'
+import { store } from "@server/game/state"
 
 export function dispatch(action: AnyAction) {
   store.dispatch(action)

@@ -1,4 +1,4 @@
-import { getShortId } from '../../../utils/id'
+import { getShortId } from '@server/utils/id'
 
 const requestActions: Game.RequestActions.RequestReactionMap = {
   log: (socketId, payload) => {
