@@ -1,5 +1,5 @@
-import createStoreCommon from '../../../../../common/game/model/state/store'
 import { Store } from 'redux'
+import createStoreCommon from '@common/game/model/state/store'
 
 let store
 

@@ -1,9 +1,9 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { getAbsoluteState } from '@common/game/model/state/processor'
 import socket from '@frontend/common/socket'
 import App from '@frontend/game/components/App'
-import getStore from '@frontend/game/model/state/store'
-import { getAbsoluteState } from '@common/game/model/state/processor'
+import getStore from '@frontend/game/state'
 
 const initialProps = (window as any).__PRELOADED_STATE__
 

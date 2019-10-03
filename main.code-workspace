@@ -6,15 +6,15 @@
     },
     {
       "path": "src/common/game",
-      "name": "Common Game"
+      "name": "Common/Game"
     },
     {
       "path": "src/services/frontend/game",
-      "name": "Frontend Game"
+      "name": "Frontend/Game"
     },
     {
       "path": "src/services/server/game",
-      "name": "Server Game"
+      "name": "Server/Game"
     },
 	],
 	"settings": {
