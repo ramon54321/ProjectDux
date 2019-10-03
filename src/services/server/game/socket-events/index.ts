@@ -1,6 +1,6 @@
 import { socketEvents } from '@server/model/sockets'
-import { getShortId } from '@server/utils/id'
-import { dispatchFullStateToSocket } from '@server/game/dispatcher'
+import { getShortId } from '@common/game/utils/id'
+import Dispatcher from '@server/game/dispatcher'
 import { socketRequestActionQueue } from '@server/game'
 
 socketEvents.on('message', data => {
@@ -14,7 +14,7 @@ socketEvents.on('message', data => {
 
 socketEvents.on('open', id => {
   console.log('Client Connected:', getShortId(id))
-  dispatchFullStateToSocket(id)
+  Dispatcher.dispatchFullStateToSocket(id)
 })
 
 socketEvents.on('close', id => {

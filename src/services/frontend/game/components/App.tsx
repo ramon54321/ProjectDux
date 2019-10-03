@@ -1,6 +1,6 @@
 import * as React from 'react'
 import RequestActions from '@frontend/game/request-actions'
-import { dispatch } from '@frontend/game/dispatcher'
+import Dispatcher from '@frontend/game/dispatcher'
 
 export interface AppProps {
   age: number
@@ -35,7 +35,7 @@ export default class App extends React.Component<AppProps, AppState> {
       <React.Fragment>
         <div>Hello from Class app of age {this.props.age}</div>
         <button onClick={() => this.refresh()}>Refresh</button>
-        <button onClick={() => dispatch(RequestActions.log('Major Tom'))}>Send Log</button>
+        <button onClick={() => Dispatcher.dispatch(RequestActions.log('Major Tom'))}>Send Log</button>
         <h3>Discreet State</h3>
         <pre>
           <code>{JSON.stringify(this.state.discreetState, null, 2)}</code>

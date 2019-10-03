@@ -1,5 +1,9 @@
 import socket from '@frontend/common/socket'
 
-export function dispatch(requestAction: Game.RequestActions.AnyRequestAction) {
+function dispatch(requestAction: Game.RequestActions.AnyRequestAction) {
   socket.send(JSON.stringify(requestAction))
+}
+
+export default {
+  dispatch
 }

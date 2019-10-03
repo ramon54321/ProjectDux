@@ -1,4 +1,4 @@
-import { getShortId } from '@server/utils/id'
+import { getShortId } from '@common/game/utils/id'
 
 const requestActions: Game.RequestActions.RequestReactionMap = {
   log: (socketId, payload) => {
@@ -9,7 +9,7 @@ const requestActions: Game.RequestActions.RequestReactionMap = {
   },
 }
 
-export function applySocketRequestAction(
+function applySocketRequestAction(
   socketRequestAction: Game.RequestActions.SocketRequestAction,
 ) {
   const requestAction = requestActions[socketRequestAction.requestAction.type]
@@ -19,4 +19,8 @@ export function applySocketRequestAction(
         socketRequestAction.requestAction.payload as any,
       )
     : undefined
+}
+
+export default {
+  applySocketRequestAction
 }

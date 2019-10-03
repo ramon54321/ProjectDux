@@ -1,6 +1,6 @@
 import { addSocket, Socket } from '../model/sockets'
 import { EventEmitter } from 'events'
-import { generateId } from '../utils/id'
+import { generateId } from '../../../common/game/utils/id'
 
 const router = require('express').Router()
 
