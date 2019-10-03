@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOMServer from 'react-dom/server'
-import App from '../components/App'
+import App from '../game/components/App'
 
 type Component = ((props: any) => any) | React.ComponentClass
 type ComponentNameMap = { [key in Frontend.Components.Name]: Component }

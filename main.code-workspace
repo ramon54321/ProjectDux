@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+      "path": ".",
+      "name": "Root"
+    },
+    {
+      "path": "src/common/game",
+      "name": "Common Game"
+    },
+    {
+      "path": "src/services/frontend/game",
+      "name": "Frontend Game"
+    },
+    {
+      "path": "src/services/server/game",
+      "name": "Server Game"
+    },
+	],
+	"settings": {
+		"typescript.tsdk": "node_modules/typescript/lib",
+		"files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+    }
+	}
+}

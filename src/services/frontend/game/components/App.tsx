@@ -1,6 +1,6 @@
 import * as React from 'react'
-import RequestActions from '../game/model/request-actions/requestActions'
-import { dispatch } from '../game/connectors/dispatcher'
+import RequestActions from '../model/request-actions/requestActions'
+import { dispatch } from '../connectors/dispatcher'
 
 export interface AppProps {
   age: number

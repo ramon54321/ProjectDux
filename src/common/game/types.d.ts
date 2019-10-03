@@ -30,10 +30,15 @@ declare namespace Game {
   export namespace RequestActions {
     export interface RequestActionCreators {
       log: (message: string) => RequestAction<'log'>
+      moveTo: (id: string, target: Vector2) => RequestAction<'moveTo'>
     }
     export interface RequestActionPayloads {
       log: {
         message: string
+      }
+      moveTo: {
+        id: string
+        target: Vector2
       }
     }
     type RequestActionTypes = keyof RequestActionPayloads
@@ -53,7 +58,7 @@ declare namespace Game {
     export type RequestActionMap = {
       [P in keyof RequestActionPayloads]: RequestActionCreators[P]
     }
-    export type RequestReducerMap = {
+    export type RequestReactionMap = {
       [P in keyof RequestActionPayloads]: (socketId: string, payload: RequestActionPayloads[P]) => any
     }
   }

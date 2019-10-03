@@ -1,8 +1,11 @@
 import { getShortId } from '../../../utils/id'
 
-const requestActions: Game.RequestActions.RequestReducerMap = {
+const requestActions: Game.RequestActions.RequestReactionMap = {
   log: (socketId, payload) => {
     console.log(`Client ${getShortId(socketId)} Logs:`, payload.message)
+  },
+  moveTo: (socketId, payload) => {
+    console.log('Moving')
   },
 }
 
@@ -13,7 +16,7 @@ export function applySocketRequestAction(
   return requestAction
     ? requestAction(
         socketRequestAction.id,
-        socketRequestAction.requestAction.payload,
+        socketRequestAction.requestAction.payload as any,
       )
     : undefined
 }

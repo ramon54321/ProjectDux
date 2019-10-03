@@ -1,5 +1,5 @@
 import { mapPositionFromWaypoints } from './position'
-import { mapProps } from '../../../../utils/mapping'
+import { mapProps } from '../../../utils/mapping'
 
 export function getAbsoluteState(
   discreetState: Game.DiscreetState.DiscreetState,
