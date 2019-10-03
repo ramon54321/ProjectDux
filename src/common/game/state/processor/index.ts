@@ -1,7 +1,7 @@
 import { mapPositionFromWaypoints } from './position'
-import { mapProps } from '../../../utils/mapping'
+import { mapProps } from '../../utils/mapping'
 
-export function getAbsoluteState(
+function getAbsoluteState(
   discreetState: Game.DiscreetState.DiscreetState,
 ): Game.AbsoluteState.AbsoluteState {
   const timestamp = Date.now()
@@ -15,4 +15,8 @@ export function getAbsoluteState(
       })),
     },
   }
+}
+
+export default {
+  getAbsoluteState
 }

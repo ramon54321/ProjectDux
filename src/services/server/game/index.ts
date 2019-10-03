@@ -2,7 +2,7 @@ import Queue from '@server/utils/queue'
 import { applySocketRequestAction } from '@server/game/manipulation'
 import '@server/game/socket-events'
 
-import Actions from '@common/game/model/state/actions/actions'
+import State from '@common/game/state'
 import { generateShortId } from '../utils/id'
 import { getAbsoluteState } from './state'
 import { dispatch } from './dispatcher'
@@ -15,7 +15,7 @@ export const socketRequestActionQueue = new Queue<SRA>()
 const tickNumberProcesses = {
   5: () => {
     dispatch(
-      Actions.spawn(generateShortId(), generateRandomName(), 1, { x: 0, y: 0 }),
+      State.Actions.spawn(generateShortId(), generateRandomName(), 1, { x: 0, y: 0 }),
     )
   },
   10: () => {
@@ -23,7 +23,7 @@ const tickNumberProcesses = {
     const id = Object.keys(absoluteState.world.units)[0]
     const timestamp = Date.now()
     dispatch(
-      Actions.setWaypoints(id, [
+      State.Actions.setWaypoints(id, [
         // Need to deduce waypoints from path and speed
         {
           timestamp: timestamp,
@@ -46,7 +46,7 @@ const tickNumberProcesses = {
   22: () => {
     const absoluteState = getAbsoluteState()
     const id = Object.keys(absoluteState.world.units)[0]
-    dispatch(Actions.destroy(id))
+    dispatch(State.Actions.destroy(id))
   },
 }
 

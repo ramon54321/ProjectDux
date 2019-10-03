@@ -1,8 +1,7 @@
-import createStore from '@common/game/model/state/store'
-import { getAbsoluteState as getCommonAbsoluteState } from '@common/game/model/state/processor'
+import State from '@common/game/state'
 
-export const store = createStore()
+export const store = State.createStore()
 
 export function getAbsoluteState(): Game.AbsoluteState.AbsoluteState {
-  return getCommonAbsoluteState(store.getState())
+  return State.Processor.getAbsoluteState(store.getState())
 }

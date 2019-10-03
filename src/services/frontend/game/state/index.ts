@@ -1,11 +1,11 @@
 import { Store } from 'redux'
-import createStoreCommon from '@common/game/model/state/store'
+import State from '@common/game/state'
 
 let store
 
 export default function getStore(initialState?: Game.DiscreetState.DiscreetState): Store {
   if (initialState || !store) {
-    store = createStoreCommon(initialState)
+    store = State.createStore(initialState)
   }
   return store
 }

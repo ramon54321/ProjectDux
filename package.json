@@ -4,7 +4,7 @@
     "start": "node dist/services/server & node dist/services/api & node dist/services/frontend",
     "start:dev": "npm run validate && npm run start",
     "build": "npm run clean && tsc && webpack && npm run copy",
-    "build:dev": "npm run validate && { tsc --watch & webpack --watch; }",
+    "build:dev": "tsc-watch --onSuccess 'npm run validate' & webpack --watch",
     "copy": "cp -R src/services/frontend/views dist/services/frontend/",
     "clean": "rm -rf dist"
   },
@@ -18,6 +18,7 @@
     "good-fences": "^0.7.0",
     "swagger-cli": "^2.3.1",
     "ts-loader": "^6.1.2",
+    "tsc-watch": "^4.0.0",
     "typescript": "^3.6.3",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9"

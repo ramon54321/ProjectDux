@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { getAbsoluteState } from '@common/game/model/state/processor'
+import State from '@common/game/state'
 import socket from '@frontend/common/socket'
 import App from '@frontend/game/components/App'
 import getStore from '@frontend/game/state'
@@ -29,7 +29,7 @@ socket.on('message', message => {
 
 function tick() {
   const discreetState: Game.DiscreetState.DiscreetState = getStore().getState()
-  const absoluteState: Game.AbsoluteState.AbsoluteState = getAbsoluteState(discreetState)
+  const absoluteState: Game.AbsoluteState.AbsoluteState = State.Processor.getAbsoluteState(discreetState)
 
   app.setDiscreetState(discreetState)
   app.setAbsoluteState(absoluteState)

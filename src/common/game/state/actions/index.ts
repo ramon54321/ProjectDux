@@ -1,4 +1,4 @@
-export const fullState = (state: Game.DiscreetState.DiscreetState) => ({
+const fullState = (state: Game.DiscreetState.DiscreetState) => ({
   type: 'fullState',
   payload: state,
 })
@@ -22,7 +22,7 @@ const destroy = (id: string): Game.Actions.Action<'destroy'> => ({
   type: 'destroy',
   payload: {
     id: id,
-  }
+  },
 })
 
 const setWaypoints = (
@@ -42,4 +42,7 @@ const actions: Game.Actions.ActionMap = {
   setWaypoints: setWaypoints,
 }
 
-export default actions
+export default {
+  ...actions,
+  fullState,
+}
