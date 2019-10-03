@@ -2,14 +2,15 @@ import './controller/socketEvents'
 
 import Actions from '../../../common/game/model/state/actions/actions'
 import { generateShortId } from '../utils/id'
-import { dispatch, getServerAbsoluteState } from './model/store'
+import { getAbsoluteState } from './model/state/store'
+import { dispatch } from './connectors/dispatcher'
 import Queue from '../utils/queue'
 import { generateRandomName } from '../utils/names'
-import { applySocketRequestAction } from './model/requestActions'
+import { applySocketRequestAction } from './model/manipulation/requestActions'
 
-export const socketRequestActionQueue = new Queue<
-  Game.RequestActions.SocketRequestAction
->()
+type SRA = Game.RequestActions.SocketRequestAction
+
+export const socketRequestActionQueue = new Queue<SRA>()
 
 const tickNumberProcesses = {
   5: () => {
@@ -18,7 +19,7 @@ const tickNumberProcesses = {
     )
   },
   10: () => {
-    const absoluteState = getServerAbsoluteState()
+    const absoluteState = getAbsoluteState()
     const id = Object.keys(absoluteState.world.units)[0]
     const timestamp = Date.now()
     dispatch(
@@ -43,7 +44,7 @@ const tickNumberProcesses = {
     )
   },
   22: () => {
-    const absoluteState = getServerAbsoluteState()
+    const absoluteState = getAbsoluteState()
     const id = Object.keys(absoluteState.world.units)[0]
     dispatch(Actions.destroy(id))
   },

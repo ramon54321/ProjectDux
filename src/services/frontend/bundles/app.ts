@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import App from '../components/App'
 import socket from '../common/socket'
-import getStore from '../game/store'
+import getStore from '../game/model/state/store'
 import { getAbsoluteState } from '../../../common/game/model/state/processor'
 
 const initialProps = (window as any).__PRELOADED_STATE__

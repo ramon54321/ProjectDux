@@ -1,6 +1,6 @@
-import { getShortId } from '../../utils/id'
+import { getShortId } from '../../../utils/id'
 
-const requestActions: Game.RequestActions.RequestActionMap = {
+const requestActions: Game.RequestActions.RequestReducerMap = {
   log: (socketId, payload) => {
     console.log(`Client ${getShortId(socketId)} Logs:`, payload.message)
   },

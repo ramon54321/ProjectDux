@@ -28,6 +28,9 @@ declare namespace Game {
   }
 
   export namespace RequestActions {
+    export interface RequestActionCreators {
+      log: (message: string) => RequestAction<'log'>
+    }
     export interface RequestActionPayloads {
       log: {
         message: string
@@ -48,6 +51,9 @@ declare namespace Game {
       requestAction: AnyRequestAction
     }
     export type RequestActionMap = {
+      [P in keyof RequestActionPayloads]: RequestActionCreators[P]
+    }
+    export type RequestReducerMap = {
       [P in keyof RequestActionPayloads]: (socketId: string, payload: RequestActionPayloads[P]) => any
     }
   }
