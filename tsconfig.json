@@ -4,7 +4,14 @@
     // "types": ["node"],
     "jsx": "react",
     "allowJs": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "baseUrl": "src",
+    "paths": {
+      "@common/*": ["common/*"],
+      "@api/*": ["services/api/*"],
+      "@frontend/*": ["services/frontend/*"],
+      "@server/*": ["services/server/*"]
+    }
   },
   "include": [
     "src/**/*.js",

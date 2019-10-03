@@ -1,3 +1,4 @@
+import 'module-alias/register'
 // import { HOST_SERVER } from '../../common/constants'
 // import routerTeams from './controller/teams'
 

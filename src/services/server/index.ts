@@ -1,3 +1,4 @@
+import 'module-alias/register'
 const app = require('express')()
 require('express-ws')(app)
 

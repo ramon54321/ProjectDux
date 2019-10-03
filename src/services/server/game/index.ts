@@ -1,12 +1,11 @@
-import './controller/socketEvents'
+import Queue from '@server/utils/queue'
+import { applySocketRequestAction } from '@server/game/model/manipulation/requestActions'
 
-import Actions from '../../../common/game/model/state/actions/actions'
+import Actions from '@common/game/model/state/actions/actions'
 import { generateShortId } from '../utils/id'
 import { getAbsoluteState } from './model/state/store'
 import { dispatch } from './connectors/dispatcher'
-import Queue from '../utils/queue'
 import { generateRandomName } from '../utils/names'
-import { applySocketRequestAction } from './model/manipulation/requestActions'
 
 type SRA = Game.RequestActions.SocketRequestAction
 

@@ -1,3 +1,4 @@
+import 'module-alias/register'
 import { HOST_SERVER } from '../../common/constants'
 import * as Handlebars from 'handlebars'
 import routerBundle from './controller/bundle'
