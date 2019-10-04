@@ -1,10 +1,10 @@
 import * as React from 'react'
+import * as R from 'ramda'
 import RequestActions from '@frontend/game/request-actions'
 import Dispatcher from '@frontend/game/dispatcher'
+import State from '@frontend/game/state'
 
-export interface AppProps {
-  age: number
-}
+export interface AppProps {}
 
 export interface AppState {
   discreetState: Game.DiscreetState.DiscreetState
@@ -15,10 +15,6 @@ export default class App extends React.Component<AppProps, AppState> {
   constructor(props) {
     super(props)
     this.state = {} as AppState
-  }
-  refresh() {
-    console.log('Refreshing UI')
-    this.forceUpdate()
   }
   setDiscreetState(discreetState: Game.DiscreetState.DiscreetState) {
     this.setState({
@@ -31,11 +27,31 @@ export default class App extends React.Component<AppProps, AppState> {
     })
   }
   render() {
+    const units = R.path(['world', 'units'], State.getStore().getState())
+    const keys = R.keys(units)
+    const firstId = R.prop(0, keys)
+
     return (
       <React.Fragment>
-        <div>Hello from Class app of age {this.props.age}</div>
-        <button onClick={() => this.refresh()}>Refresh</button>
-        <button onClick={() => Dispatcher.dispatch(RequestActions.log('Major Tom'))}>Send Log</button>
+        <button
+          onClick={() => Dispatcher.dispatch(RequestActions.log('Major Tom'))}
+        >
+          Send Log
+        </button>
+        {firstId && (
+          <button
+            onClick={() =>
+              Dispatcher.dispatch(
+                RequestActions.moveTo(firstId, {
+                  x: 30,
+                  y: 25,
+                }),
+              )
+            }
+          >
+            Move
+          </button>
+        )}
         <h3>Discreet State</h3>
         <pre>
           <code>{JSON.stringify(this.state.discreetState, null, 2)}</code>

@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    // "types": ["node"],
     "jsx": "react",
     "allowJs": true,
     "outDir": "dist",
@@ -14,12 +13,6 @@
     }
   },
   "include": [
-    "src/**/*.js",
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx"
+    "src/**/*"
   ]
-  // "exclude": [
-  //   "src/**/bundles"
-  // ]
 }

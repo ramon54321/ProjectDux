@@ -5,7 +5,8 @@ const requestActions: Game.RequestActions.RequestReactionMap = {
     console.log(`Client ${getShortId(socketId)} Logs:`, payload.message)
   },
   moveTo: (socketId, payload) => {
-    console.log('Moving')
+    const { id, target } = payload
+    console.log(`Client ${getShortId(socketId)} wants to move ${id} to ${JSON.stringify(target)}`)
   },
 }
 
@@ -14,13 +15,11 @@ function applySocketRequestAction(
 ) {
   const requestAction = requestActions[socketRequestAction.requestAction.type]
   return requestAction
-    ? requestAction(
-        socketRequestAction.id,
-        socketRequestAction.requestAction.payload as any,
-      )
+    ? requestAction(socketRequestAction.id, socketRequestAction.requestAction
+        .payload as any)
     : undefined
 }
 
 export default {
-  applySocketRequestAction
+  applySocketRequestAction,
 }

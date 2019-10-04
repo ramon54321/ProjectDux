@@ -4,13 +4,9 @@ import CommonState from '@common/game/state'
 import socket from '@frontend/common/socket'
 import App from '@frontend/game/components/App'
 import FrontendState from '@frontend/game/state'
+import Renderer from '@frontend/game/renderer'
 
 const initialProps = (window as any).__PRELOADED_STATE__
-
-const app = ReactDOM.hydrate(
-  React.createElement(App, initialProps),
-  document.getElementById('reactroot'),
-)
 
 socket.on('open', () => {
   console.log('Connected to server')
@@ -23,9 +19,13 @@ socket.on('message', message => {
   } else {
     FrontendState.getStore().dispatch(action)
   }
-  app.refresh()
   console.log(action)
 })
+
+const app = ReactDOM.hydrate(
+  React.createElement(App, initialProps),
+  document.getElementById('reactroot'),
+)
 
 function tick() {
   const discreetState: Game.DiscreetState.DiscreetState = FrontendState.getStore().getState()
@@ -33,6 +33,8 @@ function tick() {
 
   app.setDiscreetState(discreetState)
   app.setAbsoluteState(absoluteState)
+
+  Renderer.renderDiscreetState(discreetState)
 
   window.requestAnimationFrame(tick)
 }
