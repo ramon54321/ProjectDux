@@ -9,5 +9,8 @@ declare namespace Game {
     x: number
     y: number
   }
-  export type Waypoint = Timestamped<Vector2>
+  type WaypointType = 'Point' | 'Radial'
+  export type Waypoint = Timestamped<Vector2> & {
+    type: WaypointType
+  }
 }

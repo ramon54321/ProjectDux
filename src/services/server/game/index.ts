@@ -15,7 +15,10 @@ export const socketRequestActionQueue = new Queue<SRA>()
 const tickNumberProcesses = {
   5: () => {
     Dispatcher.dispatch(
-      CommonState.Actions.spawn(generateShortId(), generateRandomName(), 1, { x: 0, y: 0 }),
+      CommonState.Actions.spawn(generateShortId(), generateRandomName(), 1, {
+        x: 0,
+        y: 0,
+      }),
     )
   },
   10: () => {
@@ -27,26 +30,35 @@ const tickNumberProcesses = {
         // Need to deduce waypoints from path and speed
         {
           timestamp: timestamp,
-          x: 0,
-          y: 0,
+          type: 'Point',
+          x: 25,
+          y: 60,
         },
         {
           timestamp: timestamp + 5000,
-          x: 10,
-          y: 0,
+          type: 'Point',
+          x: 100,
+          y: 100,
+        },
+        {
+          timestamp: timestamp + 8000,
+          type: 'Point',
+          x: 120,
+          y: 80,
         },
         {
           timestamp: timestamp + 10000,
-          x: 10,
-          y: 10,
+          type: 'Point',
+          x: 140,
+          y: 80,
         },
       ]),
     )
   },
   22: () => {
-    const absoluteState = ServerState.getAbsoluteState()
-    const id = Object.keys(absoluteState.world.units)[0]
-    Dispatcher.dispatch(CommonState.Actions.destroy(id))
+    // const absoluteState = ServerState.getAbsoluteState()
+    // const id = Object.keys(absoluteState.world.units)[0]
+    // Dispatcher.dispatch(CommonState.Actions.destroy(id))
   },
 }
 

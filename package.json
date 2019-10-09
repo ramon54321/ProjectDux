@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "test": "jest --passWithNoTests",
     "validate": "gf",
     "start": "node dist/services/server & node dist/services/api & node dist/services/frontend",
     "start:dev": "npm run validate && npm run start",
@@ -10,13 +11,16 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.1",
+    "@types/jest": "^24.0.18",
     "@types/node": "^12.7.5",
     "@types/ramda": "^0.26.25",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@types/redux": "^3.6.0",
     "good-fences": "^0.7.0",
+    "jest": "^24.9.0",
     "swagger-cli": "^2.3.1",
+    "ts-jest": "^24.1.0",
     "ts-loader": "^6.1.2",
     "tsc-watch": "^4.0.0",
     "typescript": "^3.6.3",

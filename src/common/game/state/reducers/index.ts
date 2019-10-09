@@ -9,6 +9,7 @@ const reducers: Game.Actions.ReducerMap = {
       level: level,
       waypoints: [{
         timestamp: 0,
+        type: 'Point',
         x: position.x,
         y: position.y,
       }],

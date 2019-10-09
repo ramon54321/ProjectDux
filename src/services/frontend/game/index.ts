@@ -34,7 +34,7 @@ function tick() {
   app.setDiscreetState(discreetState)
   app.setAbsoluteState(absoluteState)
 
-  Renderer.renderDiscreetState(discreetState)
+  Renderer.render(discreetState, absoluteState)
 
   window.requestAnimationFrame(tick)
 }
