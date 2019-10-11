@@ -12,5 +12,10 @@ declare namespace Game {
   type WaypointType = 'Point' | 'Radial'
   export type Waypoint = Timestamped<Vector2> & {
     type: WaypointType
+    radius?: number
+    angleStart?: number
+    angleEnd?: number
+    pivotX?: number
+    pivotY?: number
   }
 }

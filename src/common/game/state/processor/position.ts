@@ -1,4 +1,5 @@
-import { inverseLerp, lerp } from "@common/game/utils/math"
+import Interpolation from '@common/game/math/Interpolation'
+import Vector from '@common/game/math/Vector'
 
 export function mapPositionFromWaypoints(
   waypoints: Game.Waypoint[],
@@ -32,9 +33,19 @@ export function mapPositionFromWaypoints(
   const waypointB = waypoints[waypointFirstAhead]
 
   // Timestamp is somewhere between two waypoints
-  const t = inverseLerp(waypointA.timestamp, waypointB.timestamp, timestamp)
-  const ix = lerp(waypointA.x, waypointB.x, t)
-  const iy = lerp(waypointA.y, waypointB.y, t)
-
-  return { x: ix, y: iy }
+  if (waypointB.type === 'Point') {
+    const t = Interpolation.inverseLerp(waypointA.timestamp, waypointB.timestamp, timestamp)
+    const ix = Interpolation.lerp(waypointA.x, waypointB.x, t)
+    const iy = Interpolation.lerp(waypointA.y, waypointB.y, t)
+    return { x: ix, y: iy }
+  } else if (waypointB.type === 'Radial') {
+    const t = Interpolation.inverseLerp(waypointA.timestamp, waypointB.timestamp, timestamp)
+    const angle = Interpolation.lerp(waypointB.angleStart, waypointB.angleEnd, t)
+    const offset = Vector.scale(Vector.angleVector(angle), waypointB.radius)
+    const position = Vector.add(offset, {
+      x: waypointB.pivotX,
+      y: waypointB.pivotY,
+    })
+    return position
+  }
 }

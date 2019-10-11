@@ -1,4 +1,4 @@
-import Vector from './'
+import Vector from './Vector'
 
 describe('Add', () => {
   it('adds positive values', () => {
@@ -515,6 +515,16 @@ describe('Angle Vector', () => {
     const expectation = {
       x: 0.7071,
       y: -0.7071,
+    }
+    expect(result.x).toBeCloseTo(expectation.x)
+    expect(result.y).toBeCloseTo(expectation.y)
+  })
+  it('gets a vector given a excessive angle', () => {
+    const a = (3 * Math.PI) / 2
+    const result = Vector.angleVector(a)
+    const expectation = {
+      x: 0,
+      y: -1,
     }
     expect(result.x).toBeCloseTo(expectation.x)
     expect(result.y).toBeCloseTo(expectation.y)
