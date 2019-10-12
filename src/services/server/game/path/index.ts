@@ -15,68 +15,70 @@ function pointsToWaypoints(
     timestamp: -1,
   }))
 
+  const convertedWaypoints = baseWaypoints.map((waypoint, index) => {
+    const isFirstWaypoint = index === 0
+    const isLastWaypoint = index === baseWaypoints.length - 1
+
+    if (isFirstWaypoint || isLastWaypoint || waypoint.type !== 'Point') {
+      return waypoint
+    }
+
+    const previousWaypoint = baseWaypoints[index - 1]
+    const nextWaypoint = baseWaypoints[index + 1]
+
+    const A = previousWaypoint.position
+    const B = waypoint.position
+    const C = nextWaypoint.position
+
+    const ba = Vector.fromPoints(B, A)
+    const bc = Vector.fromPoints(B, C)
+
+    const ABC = Vector.angleBetween(ba, bc)
+    if (ABC === Math.PI) {
+      return waypoint
+    }
+
+    const bd = Vector.insetPoint(ba, bc, radius)
+    const D = Vector.add(B, bd)
+
+    const offsetA = Vector.projection(bd, ba)
+    const offsetC = Vector.projection(bd, bc)
+
+    const BA = Vector.add(B, offsetA)
+    const BC = Vector.add(B, offsetC)
+
+    const angleStart = Vector.angleTo(BA, D)
+    const angleEnd = Vector.angleTo(BC, D)
+
+    const isStartSmaller = angleStart < angleEnd
+    const isObtuse = Math.abs(angleEnd - angleStart) > Math.PI
+
+    const angleStartCorrected =
+      isObtuse && isStartSmaller ? angleStart + Math.PI * 2 : angleStart
+    const angleEndCorrected =
+      isObtuse && !isStartSmaller ? angleEnd + Math.PI * 2 : angleEnd
+
+    const waypoints: AnyWaypoint[] = [
+      {
+        type: 'Point',
+        timestamp: waypoint.timestamp,
+        position: BA,
+      },
+      {
+        type: 'Radial',
+        timestamp: waypoint.timestamp,
+        radius: radius,
+        angleStart: angleStartCorrected,
+        angleEnd: angleEndCorrected,
+        pivot: D,
+        position: BC,
+      },
+    ]
+    return waypoints
+  })
+
   const positionalWaypoints: AnyWaypoint[] = R.flatten(
-    baseWaypoints.map((waypoint, index) => {
-      const isFirstWaypoint = index === 0
-      const isLastWaypoint = index === baseWaypoints.length - 1
-
-      if (isFirstWaypoint || isLastWaypoint || waypoint.type !== 'Point') {
-        return waypoint
-      }
-
-      const previousWaypoint = baseWaypoints[index - 1]
-      const nextWaypoint = baseWaypoints[index + 1]
-
-      const A = previousWaypoint.position
-      const B = waypoint.position
-      const C = nextWaypoint.position
-
-      const ba = Vector.fromPoints(B, A)
-      const bc = Vector.fromPoints(B, C)
-
-      const ABC = Vector.angleBetween(ba, bc)
-      if (ABC === Math.PI) {
-        return waypoint
-      }
-
-      const bd = Vector.insetPoint(ba, bc, radius)
-      const D = Vector.add(B, bd)
-
-      const offsetA = Vector.projection(bd, ba)
-      const offsetC = Vector.projection(bd, bc)
-
-      const BA = Vector.add(B, offsetA)
-      const BC = Vector.add(B, offsetC)
-
-      const angleStart = Vector.angleTo(BA, D)
-      const angleEnd = Vector.angleTo(BC, D)
-
-      const isStartSmaller = angleStart < angleEnd
-      const isObtuse = Math.abs(angleEnd - angleStart) > Math.PI
-
-      const angleStartCorrected =
-        isObtuse && isStartSmaller ? angleStart + Math.PI * 2 : angleStart
-      const angleEndCorrected =
-        isObtuse && !isStartSmaller ? angleEnd + Math.PI * 2 : angleEnd
-
-      const waypoints: AnyWaypoint[] = [
-        {
-          type: 'Point',
-          timestamp: waypoint.timestamp,
-          position: BA,
-        },
-        {
-          type: 'Radial',
-          timestamp: waypoint.timestamp,
-          radius: radius,
-          angleStart: angleStartCorrected,
-          angleEnd: angleEndCorrected,
-          pivot: D,
-          position: BC,
-        },
-      ]
-      return waypoints
-    }),
+    convertedWaypoints,
   ) as AnyWaypoint[]
 
   const waypoints = (timeAccumulation =>

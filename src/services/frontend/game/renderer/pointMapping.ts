@@ -13,3 +13,7 @@ export function mapPoint(point: Vector2): Vector2 {
 export function mapValue(value: number): number {
   return value * zoom
 }
+
+export function mapAngle(angle: number): number {
+  return -angle
+}

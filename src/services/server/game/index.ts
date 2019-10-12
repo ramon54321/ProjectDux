@@ -13,7 +13,19 @@ import { SocketRequestAction } from '@common/game/types/RequestActions'
 export const socketRequestActionQueue = new Queue<SocketRequestAction>()
 
 const tickNumberProcesses = {
-  5: () => {
+  3: () => {
+    Dispatcher.dispatch(
+      CommonState.Actions.spawn(generateShortId(), generateRandomName(), 1, {
+        x: 0,
+        y: 0,
+      }),
+    )
+    Dispatcher.dispatch(
+      CommonState.Actions.spawn(generateShortId(), generateRandomName(), 1, {
+        x: 0,
+        y: 0,
+      }),
+    )
     Dispatcher.dispatch(
       CommonState.Actions.spawn(generateShortId(), generateRandomName(), 1, {
         x: 0,
@@ -21,7 +33,7 @@ const tickNumberProcesses = {
       }),
     )
   },
-  10: () => {
+  6: () => {
     const absoluteState = ServerState.getAbsoluteState()
     const id = Object.keys(absoluteState.world.units)[0]
     const timestamp = Date.now()
@@ -29,11 +41,11 @@ const tickNumberProcesses = {
       [
         {
           x: 0,
-          y: 0,
+          y: 10,
         },
         {
           x: 50,
-          y: 0,
+          y: 10,
         },
         {
           x: 25,
@@ -48,8 +60,62 @@ const tickNumberProcesses = {
           y: 40,
         },
       ],
-      5,
+      8,
+      10,
+    ).map(waypoint => ({
+      ...waypoint,
+      timestamp: waypoint.timestamp * 1000 + timestamp,
+    }))
+    Dispatcher.dispatch(CommonState.Actions.setWaypoints(id, waypoints))
+  },
+  8: () => {
+    const absoluteState = ServerState.getAbsoluteState()
+    const id = Object.keys(absoluteState.world.units)[1]
+    const timestamp = Date.now()
+    const waypoints = Path.pointsToWaypoints(
+      [
+        {
+          x: 140,
+          y: 40,
+        },
+        {
+          x: 100,
+          y: 60,
+        },
+        {
+          x: 60,
+          y: 60,
+        },
+      ],
+      6,
       4,
+    ).map(waypoint => ({
+      ...waypoint,
+      timestamp: waypoint.timestamp * 1000 + timestamp,
+    }))
+    Dispatcher.dispatch(CommonState.Actions.setWaypoints(id, waypoints))
+  },
+  9: () => {
+    const absoluteState = ServerState.getAbsoluteState()
+    const id = Object.keys(absoluteState.world.units)[2]
+    const timestamp = Date.now()
+    const waypoints = Path.pointsToWaypoints(
+      [
+        {
+          x: 90,
+          y: 80,
+        },
+        {
+          x: 60,
+          y: 5,
+        },
+        {
+          x: 30,
+          y: 5,
+        },
+      ],
+      8,
+      6,
     ).map(waypoint => ({
       ...waypoint,
       timestamp: waypoint.timestamp * 1000 + timestamp,

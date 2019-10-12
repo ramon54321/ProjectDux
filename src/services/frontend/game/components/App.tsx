@@ -10,13 +10,19 @@ export interface AppProps {}
 export interface AppState {
   discreetState: DiscreetState
   absoluteState: AbsoluteState
+  x: number
+  y: number
 }
 
 export default class App extends React.Component<AppProps, AppState> {
   constructor(props) {
     super(props)
     this.state = {} as AppState
+
+    this.handleChangeX = this.handleChangeX.bind(this)
+    this.handleChangeY = this.handleChangeY.bind(this)
   }
+
   setDiscreetState(discreetState: DiscreetState) {
     this.setState({
       discreetState: discreetState,
@@ -27,6 +33,14 @@ export default class App extends React.Component<AppProps, AppState> {
       absoluteState: absoluteState,
     })
   }
+
+  handleChangeX(event) {
+    this.setState({ x: event.target.value })
+  }
+  handleChangeY(event) {
+    this.setState({ y: event.target.value })
+  }
+
   render() {
     const units = R.path(['world', 'units'], State.getStore().getState())
     const keys = R.keys(units)
@@ -40,18 +54,22 @@ export default class App extends React.Component<AppProps, AppState> {
           Send Log
         </button>
         {firstId && (
-          <button
-            onClick={() =>
-              Dispatcher.dispatch(
-                RequestActions.moveTo(firstId, {
-                  x: 30,
-                  y: 25,
-                }),
-              )
-            }
-          >
-            Move
-          </button>
+          <React.Fragment>
+            <input type="number" onChange={this.handleChangeX}></input>
+            <input type="number" onChange={this.handleChangeY}></input>
+            <button
+              onClick={() =>
+                Dispatcher.dispatch(
+                  RequestActions.moveTo(firstId, {
+                    x: this.state.x,
+                    y: this.state.y,
+                  }),
+                )
+              }
+            >
+              Move
+            </button>
+          </React.Fragment>
         )}
         <h3>Discreet State</h3>
         <pre>
