@@ -20,31 +20,41 @@ describe('Points to Waypoints', () => {
     const expectation = [
       {
         type: 'Point',
-        x: 0,
-        y: 0,
+        position: {
+          x: 0,
+          y: 0,
+        },
         timestamp: 0,
       },
       {
         type: 'Point',
         timestamp: 9,
-        x: 9,
-        y: 0,
+        position: {
+          x: 9,
+          y: 0,
+        },
       },
       {
         type: 'Radial',
         timestamp: 10.570796326794897,
         angleStart: -1.5707963267948966,
         angleEnd: 0,
-        pivotX: 9,
-        pivotY: 1,
+        pivot: {
+          x: 9,
+          y: 1,
+        },
         radius: 1,
-        x: 10,
-        y: 1,
+        position: {
+          x: 10,
+          y: 1,
+        },
       },
       {
         type: 'Point',
-        x: 10,
-        y: 10,
+        position: {
+          x: 10,
+          y: 10,
+        },
         timestamp: 19.5707963267949,
       },
     ]
@@ -69,31 +79,41 @@ describe('Points to Waypoints', () => {
     const expectation = [
       {
         type: 'Point',
-        x: 0,
-        y: 0,
+        position: {
+          x: 0,
+          y: 0,
+        },
         timestamp: 0,
       },
       {
         type: 'Point',
         timestamp: 9.585786437626904,
-        x: 9.585786437626904,
-        y: 0,
+        position: {
+          x: 9.585786437626904,
+          y: 0,
+        },
       },
       {
         type: 'Radial',
         timestamp: 10.371184601024353,
         angleStart: -1.5707963267948966,
         angleEnd: -0.7853981633974482,
-        pivotX: 9.585786437626904,
-        pivotY: 1,
+        pivot: {
+          x: 9.585786437626904,
+          y: 1,
+        },
         radius: 1,
-        x: 10.292893218813452,
-        y: 0.29289321881345237,
+        position: {
+          x: 10.292893218813452,
+          y: 0.29289321881345237,
+        },
       },
       {
         type: 'Point',
-        x: 20,
-        y: 10,
+        position: {
+          x: 20,
+          y: 10,
+        },
         timestamp: 24.09910666238221,
       },
     ]
@@ -115,35 +135,44 @@ describe('Points to Waypoints', () => {
       },
     ]
     const result = Path.pointsToWaypoints(a, 1, 1)
-    console.log(JSON.stringify(result, null, 2))
     const expectation = [
       {
         type: 'Point',
-        x: 0,
-        y: 0,
+        position: {
+          x: 0,
+          y: 0,
+        },
         timestamp: 0,
       },
       {
         type: 'Point',
         timestamp: 7.585786437626906,
-        x: 7.585786437626906,
-        y: 0,
+        position: {
+          x: 7.585786437626906,
+          y: 0,
+        },
       },
       {
         type: 'Radial',
         timestamp: 9.94198092781925,
         angleStart: -1.5707963267948966,
         angleEnd: 0.7853981633974478,
-        pivotX: 7.585786437626906,
-        pivotY: 0.9999999999999998,
+        pivot: {
+          x: 7.585786437626906,
+          y: 0.9999999999999998,
+        },
         radius: 1,
-        x: 8.292893218813454,
-        y: 1.707106781186547,
+        position: {
+          x: 8.292893218813454,
+          y: 1.707106781186547,
+        },
       },
       {
         type: 'Point',
-        x: 0,
-        y: 10,
+        position: {
+          x: 0,
+          y: 10,
+        },
         timestamp: 21.669902989177107,
       },
     ]
@@ -176,15 +205,19 @@ describe('Points to Waypoints', () => {
     const expectation = [
       {
         type: 'Point',
-        x: 0,
-        y: 0,
+        position: {
+          x: 0,
+          y: 0,
+        },
         timestamp: 0,
       },
       {
         type: 'Point',
         timestamp: 8.381966011250105,
-        x: 8.381966011250105,
-        y: 0,
+        position: {
+          x: 8.381966011250105,
+          y: 0,
+        },
       },
       {
         type: 'Radial',
@@ -192,16 +225,22 @@ describe('Points to Waypoints', () => {
         radius: 1,
         angleStart: -1.5707963267948966,
         angleEnd: 0.4636476090008057,
-        pivotX: 8.381966011250105,
-        pivotY: 1,
-        x: 9.276393202250022,
-        y: 1.4472135954999579,
+        pivot: {
+          x: 8.381966011250105,
+          y: 1,
+        },
+        position: {
+          x: 9.276393202250022,
+          y: 1.4472135954999579,
+        },
       },
       {
         type: 'Point',
         timestamp: 19.360681857044966,
-        x: 5.276393202250021,
-        y: 9.447213595499958,
+        position: {
+          x: 5.276393202250021,
+          y: 9.447213595499958,
+        },
       },
       {
         type: 'Radial',
@@ -209,16 +248,22 @@ describe('Points to Waypoints', () => {
         radius: 1,
         angleStart: 3.6052402625905993,
         angleEnd: 2.498091544796509,
-        pivotX: 6.170820393249937,
-        pivotY: 9.894427190999917,
-        x: 5.370820393249937,
-        y: 10.494427190999916,
+        pivot: {
+          x: 6.170820393249937,
+          y: 9.894427190999917,
+        },
+        position: {
+          x: 5.370820393249937,
+          y: 10.494427190999916,
+        },
       },
       {
         type: 'Point',
         timestamp: 23.84979658608916,
-        x: 7.4,
-        y: 13.2,
+        position: {
+          x: 7.4,
+          y: 13.2,
+        },
       },
       {
         type: 'Radial',
@@ -226,15 +271,21 @@ describe('Points to Waypoints', () => {
         radius: 1,
         angleStart: 2.4980915447965084,
         angleEnd: 0.9272952180016115,
-        pivotX: 8.2,
-        pivotY: 12.6,
-        x: 8.8,
-        y: 13.4,
+        pivot: {
+          x: 8.2,
+          y: 12.6,
+        },
+        position: {
+          x: 8.8,
+          y: 13.4,
+        },
       },
       {
         type: 'Point',
-        x: 16,
-        y: 8,
+        position: {
+          x: 16,
+          y: 8,
+        },
         timestamp: 34.42059291288406,
       },
     ]

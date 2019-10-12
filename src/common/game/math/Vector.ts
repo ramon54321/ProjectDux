@@ -1,4 +1,4 @@
-type Vector2 = Game.Vector2
+import { Vector2 } from "../types/Vector"
 
 function add(a: Vector2, b: Vector2): Vector2 {
   return { x: a.x + b.x, y: a.y + b.y }

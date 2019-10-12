@@ -1,11 +1,12 @@
-import { socketEvents } from '@server/model/sockets'
+import { SocketRequestAction } from '@common/game/types/RequestActions'
 import { getShortId } from '@common/game/utils/id'
+import { socketEvents } from '@server/model/sockets'
 import Dispatcher from '@server/game/dispatcher'
 import { socketRequestActionQueue } from '@server/game'
 
 socketEvents.on('message', data => {
   const { id, message } = data
-  const socketRequestAction: Game.RequestActions.SocketRequestAction = {
+  const socketRequestAction: SocketRequestAction = {
     id: id,
     requestAction: JSON.parse(message),
   }

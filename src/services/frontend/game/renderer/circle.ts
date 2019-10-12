@@ -1,9 +1,10 @@
 import * as R from 'ramda'
 import { mapPoint, mapValue } from './pointMapping'
+import { Vector2 } from '@common/game/types/Vector'
 
 export function drawCircle(
   context: CanvasRenderingContext2D,
-  center: Game.Vector2,
+  center: Vector2,
   radius: number,
 ) {
   const mappedCenter = mapPoint(center)
@@ -15,7 +16,7 @@ export function drawCircle(
 
 export function drawCircleSolid(
   context: CanvasRenderingContext2D,
-  center: Game.Vector2,
+  center: Vector2,
   radius: number,
 ) {
   const mappedCenter = mapPoint(center)

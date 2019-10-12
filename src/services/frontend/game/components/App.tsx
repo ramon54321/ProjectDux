@@ -3,12 +3,13 @@ import * as R from 'ramda'
 import RequestActions from '@frontend/game/request-actions'
 import Dispatcher from '@frontend/game/dispatcher'
 import State from '@frontend/game/state'
+import { DiscreetState, AbsoluteState } from '@common/game/types/State'
 
 export interface AppProps {}
 
 export interface AppState {
-  discreetState: Game.DiscreetState.DiscreetState
-  absoluteState: Game.AbsoluteState.AbsoluteState
+  discreetState: DiscreetState
+  absoluteState: AbsoluteState
 }
 
 export default class App extends React.Component<AppProps, AppState> {
@@ -16,12 +17,12 @@ export default class App extends React.Component<AppProps, AppState> {
     super(props)
     this.state = {} as AppState
   }
-  setDiscreetState(discreetState: Game.DiscreetState.DiscreetState) {
+  setDiscreetState(discreetState: DiscreetState) {
     this.setState({
       discreetState: discreetState,
     })
   }
-  setAbsoluteState(absoluteState: Game.AbsoluteState.AbsoluteState) {
+  setAbsoluteState(absoluteState: AbsoluteState) {
     this.setState({
       absoluteState: absoluteState,
     })

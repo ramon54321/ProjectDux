@@ -1,4 +1,9 @@
-const fullState = (state: Game.DiscreetState.DiscreetState) => ({
+import { DiscreetState } from '@common/game/types/State'
+import { Vector2 } from '@common/game/types/Vector'
+import { AnyWaypoint } from '@common/game/types/Waypoint'
+import { Action, ActionMap } from '@common/game/types/Actions'
+
+const fullState = (state: DiscreetState) => ({
   type: 'fullState',
   payload: state,
 })
@@ -7,8 +12,8 @@ const spawn = (
   id: string,
   name: string,
   level: number,
-  position: Game.Vector2,
-): Game.Actions.Action<'spawn'> => ({
+  position: Vector2,
+): Action<'spawn'> => ({
   type: 'spawn',
   payload: {
     id: id,
@@ -18,7 +23,7 @@ const spawn = (
   },
 })
 
-const destroy = (id: string): Game.Actions.Action<'destroy'> => ({
+const destroy = (id: string): Action<'destroy'> => ({
   type: 'destroy',
   payload: {
     id: id,
@@ -27,8 +32,8 @@ const destroy = (id: string): Game.Actions.Action<'destroy'> => ({
 
 const setWaypoints = (
   id: string,
-  waypoints: Game.Waypoint[],
-): Game.Actions.Action<'setWaypoints'> => ({
+  waypoints: AnyWaypoint[],
+): Action<'setWaypoints'> => ({
   type: 'setWaypoints',
   payload: {
     id: id,
@@ -36,7 +41,7 @@ const setWaypoints = (
   },
 })
 
-const actions: Game.Actions.ActionMap = {
+const actions: ActionMap = {
   spawn: spawn,
   destroy: destroy,
   setWaypoints: setWaypoints,

@@ -1,6 +1,7 @@
+import { AnyRequestAction } from '@common/game/types/RequestActions'
 import socket from '@frontend/common/socket'
 
-function dispatch(requestAction: Game.RequestActions.AnyRequestAction) {
+function dispatch(requestAction: AnyRequestAction) {
   socket.send(JSON.stringify(requestAction))
 }
 

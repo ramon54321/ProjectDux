@@ -1,18 +1,24 @@
 import { combineReducers } from 'redux'
+import { DiscreetStateTypes, DiscreetState } from '@common/game/types/State'
+import { ReducerMap } from '@common/game/types/Actions'
 
-const reducers: Game.Actions.ReducerMap = {
+const reducers: ReducerMap = {
   spawn: (current, payload) => {
     const { id, name, level, position } = payload
-    const unit: Game.DiscreetState.Unit = {
+    const unit: DiscreetStateTypes['Unit'] = {
       id: id,
       name: name,
       level: level,
-      waypoints: [{
-        timestamp: 0,
-        type: 'Point',
-        x: position.x,
-        y: position.y,
-      }],
+      waypoints: [
+        {
+          timestamp: 0,
+          type: 'Point',
+          position: {
+            x: position.x,
+            y: position.y,
+          },
+        },
+      ],
     }
     current[id] = unit
     return current
@@ -29,12 +35,15 @@ const reducers: Game.Actions.ReducerMap = {
   },
 }
 
-const unitsReducer = (current: {[key: string]: Game.DiscreetState.Unit} = {}, action): {[key: string]: Game.DiscreetState.Unit} => {
+const unitsReducer = (
+  current: { [key: string]: DiscreetStateTypes['Unit'] } = {},
+  action,
+): { [key: string]: DiscreetStateTypes['Unit'] } => {
   const reducer = reducers[action.type]
   return reducer ? reducer(current, action.payload) : current
 }
 
-export default combineReducers<Game.DiscreetState.DiscreetState>({
+export default combineReducers<DiscreetState>({
   world: combineReducers({
     units: unitsReducer,
   }),

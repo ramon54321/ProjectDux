@@ -1,8 +1,9 @@
 import State from '@common/game/state'
+import { AbsoluteState } from '@common/game/types/State'
 
 const store = State.createStore()
 
-function getAbsoluteState(): Game.AbsoluteState.AbsoluteState {
+function getAbsoluteState(): AbsoluteState {
   return State.Processor.getAbsoluteState(store.getState())
 }
 

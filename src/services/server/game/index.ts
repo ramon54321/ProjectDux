@@ -8,10 +8,9 @@ import { generateShortId } from '../../../common/game/utils/id'
 import Dispatcher from './dispatcher'
 import { generateRandomName } from '../../../common/game/utils/names'
 import Path from './path'
+import { SocketRequestAction } from '@common/game/types/RequestActions'
 
-type SRA = Game.RequestActions.SocketRequestAction
-
-export const socketRequestActionQueue = new Queue<SRA>()
+export const socketRequestActionQueue = new Queue<SocketRequestAction>()
 
 const tickNumberProcesses = {
   5: () => {
@@ -26,34 +25,36 @@ const tickNumberProcesses = {
     const absoluteState = ServerState.getAbsoluteState()
     const id = Object.keys(absoluteState.world.units)[0]
     const timestamp = Date.now()
-    const waypoints = Path.pointsToWaypoints([
-      {
-        x: 0,
-        y: 0,
-      },
-      {
-        x: 50,
-        y: 0,
-      },
-      {
-        x: 25,
-        y: 50,
-      },
-      {
-        x: 40,
-        y: 70,
-      },
-      {
-        x: 70,
-        y: 40,
-      },
-    ], 5, 4).map(waypoint => ({
+    const waypoints = Path.pointsToWaypoints(
+      [
+        {
+          x: 0,
+          y: 0,
+        },
+        {
+          x: 50,
+          y: 0,
+        },
+        {
+          x: 25,
+          y: 50,
+        },
+        {
+          x: 40,
+          y: 70,
+        },
+        {
+          x: 70,
+          y: 40,
+        },
+      ],
+      5,
+      4,
+    ).map(waypoint => ({
       ...waypoint,
-      timestamp: (waypoint.timestamp * 1000) + timestamp,
+      timestamp: waypoint.timestamp * 1000 + timestamp,
     }))
-    Dispatcher.dispatch(
-      CommonState.Actions.setWaypoints(id, waypoints)
-    )
+    Dispatcher.dispatch(CommonState.Actions.setWaypoints(id, waypoints))
   },
   22: () => {
     // const absoluteState = ServerState.getAbsoluteState()

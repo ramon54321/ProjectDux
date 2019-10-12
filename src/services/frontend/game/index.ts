@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { DiscreetState, AbsoluteState } from '@common/game/types/State'
 import CommonState from '@common/game/state'
 import socket from '@frontend/common/socket'
 import App from '@frontend/game/components/App'
@@ -28,8 +29,10 @@ const app = ReactDOM.hydrate(
 )
 
 function tick() {
-  const discreetState: Game.DiscreetState.DiscreetState = FrontendState.getStore().getState()
-  const absoluteState: Game.AbsoluteState.AbsoluteState = CommonState.Processor.getAbsoluteState(discreetState)
+  const discreetState: DiscreetState = FrontendState.getStore().getState()
+  const absoluteState: AbsoluteState = CommonState.Processor.getAbsoluteState(
+    discreetState,
+  )
 
   app.setDiscreetState(discreetState)
   app.setAbsoluteState(absoluteState)
