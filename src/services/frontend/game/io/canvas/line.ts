@@ -2,10 +2,20 @@ import * as R from 'ramda'
 import { mapPoint } from './pointMapping'
 import { Vector2 } from '@common/game/types/Vector'
 
-export function drawPath(
+export function drawLine(
   context: CanvasRenderingContext2D,
-  points: Vector2[],
+  start: Vector2,
+  end: Vector2,
 ) {
+  const mappedStart = mapPoint(start)
+  const mappedEnd = mapPoint(end)
+  context.beginPath()
+  context.moveTo(mappedStart.x, mappedStart.y)
+  context.lineTo(mappedEnd.x, mappedEnd.y)
+  context.stroke()
+}
+
+export function drawPath(context: CanvasRenderingContext2D, points: Vector2[]) {
   if (points.length < 2) {
     return
   }

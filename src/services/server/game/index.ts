@@ -60,7 +60,7 @@ const tickNumberProcesses = {
           y: 40,
         },
       ],
-      8,
+      0.5,
       10,
     ).map(waypoint => ({
       ...waypoint,
@@ -87,7 +87,7 @@ const tickNumberProcesses = {
           y: 60,
         },
       ],
-      6,
+      0.4,
       4,
     ).map(waypoint => ({
       ...waypoint,
@@ -114,7 +114,7 @@ const tickNumberProcesses = {
           y: 5,
         },
       ],
-      8,
+      0.7,
       6,
     ).map(waypoint => ({
       ...waypoint,
@@ -128,6 +128,8 @@ const tickNumberProcesses = {
     // Dispatcher.dispatch(CommonState.Actions.destroy(id))
   },
 }
+
+// TODO: Refactor requestActions to have access to state
 
 let tickNumber = 0
 setInterval(() => {

@@ -9,6 +9,7 @@ import {
   AbsoluteState,
 } from '@common/game/types/State'
 import Map from '@common/game/logic/Map'
+import { drawGrid } from './grid'
 
 const rendererParentElement = document.getElementById('renderer')
 const canvas: HTMLCanvasElement = document.createElement('canvas')
@@ -25,10 +26,23 @@ canvas.height = HEIGHT
 rendererParentElement.appendChild(canvas)
 
 function renderDiscreetState(discreetState: DiscreetState) {
-
-  context.strokeStyle = '#EE1111'
+  // Draw Grid
+  const gridBackground = context.createRadialGradient(
+    WIDTH / 2,
+    HEIGHT / 2,
+    0,
+    WIDTH / 2,
+    HEIGHT / 2,
+    1000,
+  )
+  gridBackground.addColorStop(0, 'rgba(20, 90, 160, 0.85)')
+  gridBackground.addColorStop(1, 'rgba(20, 90, 160, 1.0)')
+  context.fillStyle = gridBackground
+  context.fillRect(0, 0, WIDTH, HEIGHT)
+  drawGrid(context, 0, 0, 160, 120)
 
   // Draw Unit Waypoint Lines
+  context.strokeStyle = 'rgba(255, 255, 255, 1.0)'
   const unitsMap = R.path(['world', 'units'], discreetState)
   const units = R.keys(unitsMap).map(
     key => unitsMap[key],
@@ -52,8 +66,7 @@ function renderDiscreetState(discreetState: DiscreetState) {
 }
 
 function renderAbsoluteState(absoluteState: AbsoluteState) {
-
-  context.fillStyle = '#1111EE'
+  context.fillStyle = 'rgba(255, 255, 255, 1.0)'
 
   // Draw Unit Positions
   const unitsMap = R.path(['world', 'units'], absoluteState)

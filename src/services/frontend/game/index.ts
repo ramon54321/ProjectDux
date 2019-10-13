@@ -5,7 +5,7 @@ import CommonState from '@common/game/state'
 import socket from '@frontend/common/socket'
 import App from '@frontend/game/components/App'
 import FrontendState from '@frontend/game/state'
-import Renderer from '@frontend/game/renderer'
+import Renderer from '@frontend/game/io'
 
 const initialProps = (window as any).__PRELOADED_STATE__
 
