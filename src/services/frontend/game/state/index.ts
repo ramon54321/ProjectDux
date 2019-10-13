@@ -2,15 +2,15 @@ import { Store } from 'redux'
 import State from '@common/game/state'
 import { DiscreetState } from '@common/game/types/State'
 
-let store
+let modelStore
 
-function getStore(initialState?: DiscreetState): Store {
-  if (initialState || !store) {
-    store = State.createStore(initialState)
+function getModelStore(initialState?: DiscreetState): Store {
+  if (initialState || !modelStore) {
+    modelStore = State.createStore(initialState)
   }
-  return store
+  return modelStore
 }
 
 export default {
-  getStore,
+  getModelStore,
 }

@@ -10,6 +10,9 @@ import {
 } from '@common/game/types/State'
 import Map from '@common/game/logic/Map'
 import { drawGrid } from './grid'
+import { mapPointToWorld } from './pointMapping'
+import { Vector2 } from '@common/game/types/Vector'
+import { EventEmitter } from 'events'
 
 const rendererParentElement = document.getElementById('renderer')
 const canvas: HTMLCanvasElement = document.createElement('canvas')
@@ -24,6 +27,18 @@ canvas.width = WIDTH
 canvas.height = HEIGHT
 
 rendererParentElement.appendChild(canvas)
+
+let mouseWorldPosition: Vector2 = {x: 0, y: 0}
+
+canvas.onmousemove = event => {
+  const rect = canvas.getBoundingClientRect()
+  const scaleX = canvas.width / rect.width
+  const scaleY = canvas.height / rect.height
+  const x = (event.clientX - rect.left) * scaleX
+  const y = (event.clientY - rect.top) * scaleY
+  const mappedPoint = mapPointToWorld({x: x, y: y})
+  mouseWorldPosition = mappedPoint
+}
 
 function renderDiscreetState(discreetState: DiscreetState) {
   // Draw Grid
@@ -76,10 +91,11 @@ function renderAbsoluteState(absoluteState: AbsoluteState) {
   units.forEach(unit => drawCircleSolid(context, unit.position, 1))
 }
 
-function render(discreetState: DiscreetState, absoluteState: AbsoluteState) {
+function render(discreetState: DiscreetState, absoluteState: AbsoluteState, events: EventEmitter) {
   context.clearRect(0, 0, WIDTH, HEIGHT)
   renderDiscreetState(discreetState)
   renderAbsoluteState(absoluteState)
+  events.emit('mousemove', mouseWorldPosition)
 }
 
 export default {

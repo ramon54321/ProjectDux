@@ -1,4 +1,4 @@
-import { mapPoint, mapValue, mapAngle } from './pointMapping'
+import { mapPointToCanvas, mapValueToCanvas, mapAngleToCanvas } from './pointMapping'
 import { Vector2 } from '@common/game/types/Vector'
 
 export function drawCircle(
@@ -6,8 +6,8 @@ export function drawCircle(
   center: Vector2,
   radius: number,
 ) {
-  const mappedCenter = mapPoint(center)
-  const mappedRadius = mapValue(radius)
+  const mappedCenter = mapPointToCanvas(center)
+  const mappedRadius = mapValueToCanvas(radius)
   context.beginPath()
   context.arc(mappedCenter.x, mappedCenter.y, mappedRadius, 0, Math.PI * 2)
   context.stroke()
@@ -20,10 +20,10 @@ export function drawArc(
   start: number,
   end: number,
 ) {
-  const mappedCenter = mapPoint(center)
-  const mappedRadius = mapValue(radius)
-  const mappedStart = mapAngle(start)
-  const mappedEnd = mapAngle(end)
+  const mappedCenter = mapPointToCanvas(center)
+  const mappedRadius = mapValueToCanvas(radius)
+  const mappedStart = mapAngleToCanvas(start)
+  const mappedEnd = mapAngleToCanvas(end)
   const counterClockwise = mappedStart > mappedEnd
   context.beginPath()
   context.arc(
@@ -42,8 +42,8 @@ export function drawCircleSolid(
   center: Vector2,
   radius: number,
 ) {
-  const mappedCenter = mapPoint(center)
-  const mappedRadius = mapValue(radius)
+  const mappedCenter = mapPointToCanvas(center)
+  const mappedRadius = mapValueToCanvas(radius)
   context.beginPath()
   context.arc(mappedCenter.x, mappedCenter.y, mappedRadius, 0, Math.PI * 2)
   context.fill()

@@ -5,7 +5,7 @@ import CommonState from '@common/game/state'
 import socket from '@frontend/common/socket'
 import App from '@frontend/game/components/App'
 import FrontendState from '@frontend/game/state'
-import Renderer from '@frontend/game/io'
+import IO from '@frontend/game/io'
 
 const initialProps = (window as any).__PRELOADED_STATE__
 
@@ -16,12 +16,14 @@ socket.on('open', () => {
 socket.on('message', message => {
   const action = JSON.parse(message)
   if (action.type === 'fullState') {
-    FrontendState.getStore(action.payload)
+    FrontendState.getModelStore(action.payload)
   } else {
-    FrontendState.getStore().dispatch(action)
+    FrontendState.getModelStore().dispatch(action)
   }
   console.log(action)
 })
+
+initialProps.events = IO.events
 
 const app = ReactDOM.hydrate(
   React.createElement(App, initialProps),
@@ -29,7 +31,7 @@ const app = ReactDOM.hydrate(
 )
 
 function tick() {
-  const discreetState: DiscreetState = FrontendState.getStore().getState()
+  const discreetState: DiscreetState = FrontendState.getModelStore().getState()
   const absoluteState: AbsoluteState = CommonState.Processor.getAbsoluteState(
     discreetState,
   )
@@ -37,7 +39,7 @@ function tick() {
   app.setDiscreetState(discreetState)
   app.setAbsoluteState(absoluteState)
 
-  Renderer.render(discreetState, absoluteState)
+  IO.render(discreetState, absoluteState)
 
   window.requestAnimationFrame(tick)
 }
