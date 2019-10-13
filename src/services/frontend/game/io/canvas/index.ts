@@ -12,7 +12,7 @@ import Map from '@common/game/logic/Map'
 import { drawGrid } from './grid'
 import { mapPointToWorld } from './pointMapping'
 import { Vector2 } from '@common/game/types/Vector'
-import { EventEmitter } from 'events'
+import { ClientEventEmitter } from '@frontend/game/types/Events'
 
 const rendererParentElement = document.getElementById('renderer')
 const canvas: HTMLCanvasElement = document.createElement('canvas')
@@ -38,6 +38,10 @@ canvas.onmousemove = event => {
   const y = (event.clientY - rect.top) * scaleY
   const mappedPoint = mapPointToWorld({x: x, y: y})
   mouseWorldPosition = mappedPoint
+}
+
+function pollEvents(events: ClientEventEmitter) {
+  events.emit('mousemove', mouseWorldPosition)
 }
 
 function renderDiscreetState(discreetState: DiscreetState) {
@@ -91,11 +95,11 @@ function renderAbsoluteState(absoluteState: AbsoluteState) {
   units.forEach(unit => drawCircleSolid(context, unit.position, 1))
 }
 
-function render(discreetState: DiscreetState, absoluteState: AbsoluteState, events: EventEmitter) {
+function render(discreetState: DiscreetState, absoluteState: AbsoluteState, events: ClientEventEmitter) {
   context.clearRect(0, 0, WIDTH, HEIGHT)
   renderDiscreetState(discreetState)
   renderAbsoluteState(absoluteState)
-  events.emit('mousemove', mouseWorldPosition)
+  pollEvents(events)
 }
 
 export default {

@@ -60,7 +60,7 @@ const tickNumberProcesses = {
           y: 40,
         },
       ],
-      0.5,
+      2.5,
       10,
     ).map(waypoint => ({
       ...waypoint,
@@ -87,7 +87,7 @@ const tickNumberProcesses = {
           y: 100,
         },
       ],
-      0.4,
+      1.4,
       4,
     ).map(waypoint => ({
       ...waypoint,
@@ -114,7 +114,7 @@ const tickNumberProcesses = {
           y: 5,
         },
       ],
-      0.7,
+      1.7,
       6,
     ).map(waypoint => ({
       ...waypoint,

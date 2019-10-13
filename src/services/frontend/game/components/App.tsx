@@ -1,15 +1,14 @@
 import * as React from 'react'
 import * as R from 'ramda'
+import { DiscreetState, AbsoluteState } from '@common/game/types/State'
+import { Vector2 } from '@common/game/types/Vector'
+import { ClientEventEmitter } from '@frontend/game/types/Events'
 import RequestActions from '@frontend/game/request-actions'
 import Dispatcher from '@frontend/game/dispatcher'
 import State from '@frontend/game/state'
-import { DiscreetState, AbsoluteState } from '@common/game/types/State'
-// import IO from '@frontend/game/io'
-import { Vector2 } from '@common/game/types/Vector'
-import { EventEmitter } from 'events'
 
 export interface AppProps {
-  events: EventEmitter
+  events: ClientEventEmitter
 }
 
 export interface AppState {
@@ -32,17 +31,18 @@ export default class App extends React.Component<AppProps, AppState> {
         mouseWorldPosition: {
           x: 0,
           y: 0,
-        }
-      }
+        },
+      },
     } as AppState
 
-    this.props.events && this.props.events.on('mousemove', (mouseWorldPosition: Vector2) => {
-      this.setState({
-        viewState: {
-          mouseWorldPosition: mouseWorldPosition,
-        }
+    this.props.events &&
+      this.props.events.on('mousemove', mouseWorldPosition => {
+        this.setState({
+          viewState: {
+            mouseWorldPosition: mouseWorldPosition,
+          },
+        })
       })
-    })
 
     this.handleChangeX = this.handleChangeX.bind(this)
     this.handleChangeY = this.handleChangeY.bind(this)
@@ -101,7 +101,8 @@ export default class App extends React.Component<AppProps, AppState> {
         <div>
           <pre>
             <code>
-              MouseX: {this.state.viewState.mouseWorldPosition.x}<br />
+              MouseX: {this.state.viewState.mouseWorldPosition.x}
+              <br />
               MouseY: {this.state.viewState.mouseWorldPosition.y}
             </code>
           </pre>
