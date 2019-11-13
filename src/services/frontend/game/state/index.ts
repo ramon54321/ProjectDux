@@ -1,12 +1,12 @@
 import { Store } from 'redux'
-import State from '@common/game/state'
-import { DiscreetState } from '@common/game/types/State'
+import StateManager from '@common/game/state'
+import { State } from '@common/game/types/State'
 
 let modelStore
 
-function getModelStore(initialState?: DiscreetState): Store {
+function getModelStore(initialState?: State<'Discreet'>): Store {
   if (initialState || !modelStore) {
-    modelStore = State.createStore(initialState)
+    modelStore = StateManager.createStore(initialState)
   }
   return modelStore
 }

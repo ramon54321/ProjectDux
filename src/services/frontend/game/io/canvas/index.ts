@@ -1,107 +1,88 @@
-import * as R from 'ramda'
-import { drawPath } from './line'
-import { drawCircleSolid, drawArc } from './circle'
-import WaypointTypes, { AnyWaypoint } from '@common/game/types/Waypoint'
-import {
-  DiscreetState,
-  DiscreetStateTypes,
-  AbsoluteStateTypes,
-  AbsoluteState,
-} from '@common/game/types/State'
-import Map from '@common/game/logic/Map'
-import { drawGrid } from './grid'
+import { State } from '@common/game/types/State'
+import { InterfaceEventEmitter } from '@frontend/game/types/Events'
+import { IOController } from '@frontend/game/types/IO'
 import { mapPointToWorld } from './pointMapping'
-import { Vector2 } from '@common/game/types/Vector'
-import { ClientEventEmitter } from '@frontend/game/types/Events'
+import BackgroundRenderLayer from './render-layers/background'
+import UnitsRenderLayer from './render-layers/units'
+import WaypointsRenderLayer from './render-layers/waypoints'
+import RenderLayer from './render-layers'
 
-const rendererParentElement = document.getElementById('renderer')
-const canvas: HTMLCanvasElement = document.createElement('canvas')
-const context: CanvasRenderingContext2D = canvas.getContext('2d')
+
 
 export const WIDTH = 1600
 export const HEIGHT = 1200
 
-canvas.style.width = '800px'
-canvas.style.height = '600px'
-canvas.width = WIDTH
-canvas.height = HEIGHT
 
-rendererParentElement.appendChild(canvas)
 
-let mouseWorldPosition: Vector2 = {x: 0, y: 0}
 
-canvas.onmousemove = event => {
-  const rect = canvas.getBoundingClientRect()
-  const scaleX = canvas.width / rect.width
-  const scaleY = canvas.height / rect.height
-  const x = (event.clientX - rect.left) * scaleX
-  const y = (event.clientY - rect.top) * scaleY
-  const mappedPoint = mapPointToWorld({x: x, y: y})
-  mouseWorldPosition = mappedPoint
+
+const mouseWorldPosition = { x: 0, y: 0 }
+
+
+
+
+function setCanvasDimensions(canvas: HTMLCanvasElement) {
+  canvas.style.width = '800px'
+  canvas.style.height = '600px'
+  canvas.width = WIDTH
+  canvas.height = HEIGHT
 }
 
-function pollEvents(events: ClientEventEmitter) {
-  events.emit('mousemove', mouseWorldPosition)
-}
 
-function renderDiscreetState(discreetState: DiscreetState) {
-  // Draw Grid
-  const gridBackground = context.createRadialGradient(
-    WIDTH / 2,
-    HEIGHT / 2,
-    0,
-    WIDTH / 2,
-    HEIGHT / 2,
-    1000,
-  )
-  gridBackground.addColorStop(0, 'rgba(20, 90, 160, 0.85)')
-  gridBackground.addColorStop(1, 'rgba(20, 90, 160, 1.0)')
-  context.fillStyle = gridBackground
-  context.fillRect(0, 0, WIDTH, HEIGHT)
-  drawGrid(context, 0, 0, 160, 120)
 
-  // Draw Unit Waypoint Lines
-  context.strokeStyle = 'rgba(255, 255, 255, 1.0)'
-  const unitsMap = R.path(['world', 'units'], discreetState)
-  const units = R.keys(unitsMap).map(
-    key => unitsMap[key],
-  ) as DiscreetStateTypes['Unit'][]
-  units.forEach(unit => {
-    const waypoints: AnyWaypoint[] = unit.waypoints
-    Map.interval(waypoints, (waypointA, waypointB) => {
-      if (WaypointTypes.isPointWaypoint(waypointB)) {
-        drawPath(context, [waypointA.position, waypointB.position])
-      } else if (WaypointTypes.isRadialWaypoint(waypointB)) {
-        drawArc(
-          context,
-          waypointB.pivot,
-          waypointB.radius,
-          waypointB.angleStart,
-          waypointB.angleEnd,
-        )
-      }
-    })
-  })
-}
 
-function renderAbsoluteState(absoluteState: AbsoluteState) {
-  context.fillStyle = 'rgba(255, 255, 255, 1.0)'
 
-  // Draw Unit Positions
-  const unitsMap = R.path(['world', 'units'], absoluteState)
-  const units = R.keys(unitsMap).map(
-    key => unitsMap[key],
-  ) as AbsoluteStateTypes['Unit'][]
-  units.forEach(unit => drawCircleSolid(context, unit.position, 1))
-}
 
-function render(discreetState: DiscreetState, absoluteState: AbsoluteState, events: ClientEventEmitter) {
-  context.clearRect(0, 0, WIDTH, HEIGHT)
-  renderDiscreetState(discreetState)
-  renderAbsoluteState(absoluteState)
-  pollEvents(events)
-}
+export default class CanvasIOController implements IOController {
+  private interfaceState: any
+  private interfaceEvents: InterfaceEventEmitter
 
-export default {
-  render,
+  private canvas: HTMLCanvasElement
+  private context: CanvasRenderingContext2D
+
+  private renderLayers: RenderLayer[]
+
+  constructor(interfaceState: any, interfaceEvents: InterfaceEventEmitter) {
+    this.interfaceState = interfaceState
+    this.interfaceEvents = interfaceEvents
+
+    this.canvas = document.createElement('canvas')
+    this.context = this.canvas.getContext('2d')
+
+    document.getElementById('renderer').appendChild(this.canvas)
+
+    setCanvasDimensions(this.canvas)
+
+    this.canvas.onmousemove = event => {
+      const rect = this.canvas.getBoundingClientRect()
+      const scaleX = this.canvas.width / rect.width
+      const scaleY = this.canvas.height / rect.height
+      const x = (event.clientX - rect.left) * scaleX
+      const y = (event.clientY - rect.top) * scaleY
+      const mappedPoint = mapPointToWorld({ x: x, y: y })
+      mouseWorldPosition.x = mappedPoint.x
+      mouseWorldPosition.y = mappedPoint.y
+    }
+
+    this.renderLayers = [
+      new BackgroundRenderLayer(this.context),
+      new UnitsRenderLayer(this.context),
+      new WaypointsRenderLayer(this.context),
+    ]
+  }
+
+  render(discreetState: State<'Discreet'>, absoluteState: State<'Absolute'>) {
+    this.interfaceState.mouseWorldPosition = mouseWorldPosition
+
+    this.context.clearRect(0, 0, WIDTH, HEIGHT)
+
+    this.renderLayers.forEach(renderLayer =>
+      renderLayer.render(
+        discreetState,
+        absoluteState,
+        this.interfaceState,
+        this.interfaceEvents,
+      ),
+    )
+  }
 }

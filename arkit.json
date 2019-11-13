@@ -1,0 +1,38 @@
+{
+  "$schema": "https://arkit.pro/schema.json",
+  "components": [
+    {
+      "type": "Entry",
+      "patterns": ["*.ts"]
+    },
+    {
+      "type": "Frontend",
+      "patterns": ["src/services/frontend/**/*.ts"]
+    },
+    {
+      "type": "Server",
+      "patterns": ["src/services/server/**/*.ts"]
+    },
+    {
+      "type": "Common",
+      "patterns": ["src/common/**/*.ts"]
+    }
+  ],
+  "output": {
+    "path": "arkit.svg",
+    "groups": [
+      {
+        "type": "Server",
+        "patterns": ["src/services/server/**"]
+      },
+      {
+        "type": "Frontend",
+        "patterns": ["src/services/frontend/**"]
+      },
+      {
+        "type": "Common Stuff",
+        "patterns": ["src/common/**/*.ts"]
+      }
+    ]
+  }
+}

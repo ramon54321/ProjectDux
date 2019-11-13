@@ -99,6 +99,10 @@ function distance(a: Vector2, b: Vector2): number {
   return magnitude(subtract(b, a))
 }
 
+function squareDistance(a: Vector2, b: Vector2): number {
+  return squareMagnitude(subtract(b, a))
+}
+
 export default {
   add,
   subtract,
@@ -117,4 +121,5 @@ export default {
   angleVector,
   fromPoints,
   distance,
+  squareDistance,
 }

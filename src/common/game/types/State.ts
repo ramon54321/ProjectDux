@@ -1,30 +1,34 @@
 import { AnyWaypoint } from './Waypoint'
 import { Vector2 } from './Vector'
 
-export interface DiscreetState {
-  world: {
-    units: { [key: string]: DiscreetStateTypes['Unit'] }
-  }
-}
-export interface DiscreetStateTypes {
-  Unit: {
-    id: string
-    name: string
-    level: number
-    waypoints: AnyWaypoint[]
-  }
+type Movable<S extends StateType> = S extends 'Discreet' ? {
+  waypoints: AnyWaypoint[]
+} : {
+  position: Vector2
 }
 
-export interface AbsoluteState {
-  world: {
-    units: { [key: string]: AbsoluteStateTypes['Unit'] }
-  }
-}
-export interface AbsoluteStateTypes {
-  Unit: {
-    id: string
+interface UnitPropertiesMap<S extends StateType> {
+  Rifleman: {
     name: string
     level: number
-    position: Vector2
+  } & Movable<S>
+}
+
+export type UnitType = keyof UnitPropertiesMap<StateType>
+
+type Unit<S extends StateType, T extends UnitType> = {
+  id: string
+  type: T
+} & UnitPropertiesMap<S>[T]
+
+export interface StateFragments<S extends StateType> {
+  Unit: Unit<S, UnitType>
+}
+
+type StateType = 'Discreet' | 'Absolute'
+
+export interface State<S extends StateType> {
+  world: {
+    units: { [key: string]: StateFragments<S>['Unit'] }
   }
 }

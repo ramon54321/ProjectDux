@@ -1,16 +1,14 @@
-import { Vector2 } from '@common/game/types/Vector'
-
-interface ClientEvents {
-  mousemove: Vector2
+interface InterfaceEvents {
+  tick_ui: any
 }
 
-export interface ClientEventEmitter {
-  on: <T extends keyof ClientEvents>(
+export interface InterfaceEventEmitter {
+  on: <T extends keyof InterfaceEvents>(
     event: T,
-    action: (payload: ClientEvents[T]) => void,
+    action: (payload: InterfaceEvents[T]) => void,
   ) => void
-  emit: <T extends keyof ClientEvents>(
+  emit: <T extends keyof InterfaceEvents>(
     event: T,
-    ...payload: ClientEvents[T] extends void ? [] : [ClientEvents[T]]
+    ...payload: InterfaceEvents[T] extends void ? [] : [InterfaceEvents[T]]
   ) => void
 }

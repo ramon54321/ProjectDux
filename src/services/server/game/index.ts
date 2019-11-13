@@ -9,25 +9,26 @@ import Dispatcher from './dispatcher'
 import { generateRandomName } from '../../../common/game/utils/names'
 import Path from './path'
 import { SocketRequestAction } from '@common/game/types/RequestActions'
+import Specs from '@common/game/specs'
 
 export const socketRequestActionQueue = new Queue<SocketRequestAction>()
 
 const tickNumberProcesses = {
   3: () => {
     Dispatcher.dispatch(
-      CommonState.Actions.spawn(generateShortId(), generateRandomName(), 1, {
+      CommonState.Actions.spawn(generateShortId(), 'Rifleman', generateRandomName(), 2, {
         x: 0,
         y: 0,
       }),
     )
     Dispatcher.dispatch(
-      CommonState.Actions.spawn(generateShortId(), generateRandomName(), 1, {
+      CommonState.Actions.spawn(generateShortId(), 'Rifleman', generateRandomName(), 1, {
         x: 0,
         y: 0,
       }),
     )
     Dispatcher.dispatch(
-      CommonState.Actions.spawn(generateShortId(), generateRandomName(), 1, {
+      CommonState.Actions.spawn(generateShortId(), 'Rifleman', generateRandomName(), 4, {
         x: 0,
         y: 0,
       }),
@@ -36,6 +37,8 @@ const tickNumberProcesses = {
   6: () => {
     const absoluteState = ServerState.getAbsoluteState()
     const id = Object.keys(absoluteState.world.units)[0]
+    const type = absoluteState.world.units[id].type
+    const { speed, turnRadius } = Specs.getSpecs(type)
     const timestamp = Date.now()
     const waypoints = Path.pointsToWaypoints(
       [
@@ -60,8 +63,8 @@ const tickNumberProcesses = {
           y: 40,
         },
       ],
-      2.5,
-      10,
+      speed,
+      turnRadius,
     ).map(waypoint => ({
       ...waypoint,
       timestamp: waypoint.timestamp * 1000 + timestamp,
@@ -71,6 +74,8 @@ const tickNumberProcesses = {
   8: () => {
     const absoluteState = ServerState.getAbsoluteState()
     const id = Object.keys(absoluteState.world.units)[1]
+    const type = absoluteState.world.units[id].type
+    const { speed, turnRadius } = Specs.getSpecs(type)
     const timestamp = Date.now()
     const waypoints = Path.pointsToWaypoints(
       [
@@ -87,8 +92,8 @@ const tickNumberProcesses = {
           y: 100,
         },
       ],
-      1.4,
-      4,
+      speed,
+      turnRadius,
     ).map(waypoint => ({
       ...waypoint,
       timestamp: waypoint.timestamp * 1000 + timestamp,
@@ -98,6 +103,8 @@ const tickNumberProcesses = {
   9: () => {
     const absoluteState = ServerState.getAbsoluteState()
     const id = Object.keys(absoluteState.world.units)[2]
+    const type = absoluteState.world.units[id].type
+    const { speed, turnRadius } = Specs.getSpecs(type)
     const timestamp = Date.now()
     const waypoints = Path.pointsToWaypoints(
       [
@@ -114,8 +121,8 @@ const tickNumberProcesses = {
           y: 5,
         },
       ],
-      1.7,
-      6,
+      speed,
+      turnRadius,
     ).map(waypoint => ({
       ...waypoint,
       timestamp: waypoint.timestamp * 1000 + timestamp,

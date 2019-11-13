@@ -1,9 +1,11 @@
 import { Vector2 } from './Vector'
 import { AnyWaypoint } from './Waypoint'
+import { UnitType } from './State'
 
 export interface ActionCreators {
   spawn: (
     id: string,
+    type: UnitType,
     name: string,
     level: number,
     position: Vector2,
@@ -15,6 +17,7 @@ export interface ActionCreators {
 interface ActionPayloads {
   spawn: {
     id: string
+    type: UnitType
     name: string
     level: number
     position: Vector2

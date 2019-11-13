@@ -1,19 +1,19 @@
 import * as React from 'react'
 import * as R from 'ramda'
-import { DiscreetState, AbsoluteState } from '@common/game/types/State'
+import { State } from '@common/game/types/State'
 import { Vector2 } from '@common/game/types/Vector'
-import { ClientEventEmitter } from '@frontend/game/types/Events'
+import { InterfaceEventEmitter } from '@frontend/game/types/Events'
 import RequestActions from '@frontend/game/request-actions'
 import Dispatcher from '@frontend/game/dispatcher'
-import State from '@frontend/game/state'
+import ClientState from '@frontend/game/state'
 
 export interface AppProps {
-  events: ClientEventEmitter
+  interfaceEvents: InterfaceEventEmitter
 }
 
 export interface AppState {
-  discreetState: DiscreetState
-  absoluteState: AbsoluteState
+  discreetState: State<'Discreet'>
+  absoluteState: State<'Absolute'>
   viewState: ViewState
   x: number
   y: number
@@ -35,11 +35,11 @@ export default class App extends React.Component<AppProps, AppState> {
       },
     } as AppState
 
-    this.props.events &&
-      this.props.events.on('mousemove', mouseWorldPosition => {
+    this.props.interfaceEvents &&
+      this.props.interfaceEvents.on('tick_ui', uiState => {
         this.setState({
           viewState: {
-            mouseWorldPosition: mouseWorldPosition,
+            mouseWorldPosition: uiState.mouseWorldPosition,
           },
         })
       })
@@ -48,12 +48,12 @@ export default class App extends React.Component<AppProps, AppState> {
     this.handleChangeY = this.handleChangeY.bind(this)
   }
 
-  setDiscreetState(discreetState: DiscreetState) {
+  setDiscreetState(discreetState: State<'Discreet'>) {
     this.setState({
       discreetState: discreetState,
     })
   }
-  setAbsoluteState(absoluteState: AbsoluteState) {
+  setAbsoluteState(absoluteState: State<'Absolute'>) {
     this.setState({
       absoluteState: absoluteState,
     })
@@ -67,7 +67,7 @@ export default class App extends React.Component<AppProps, AppState> {
   }
 
   render() {
-    const units = R.path(['world', 'units'], State.getModelStore().getState())
+    const units = R.path(['world', 'units'], ClientState.getModelStore().getState())
     const keys = R.keys(units)
     const firstId = R.prop(0, keys)
 

@@ -1,7 +1,7 @@
-function props<T>(object: Object, f: (x: T) => any) {
+function props<T>(object: Object, f: (value: T, key: any) => any) {
   const newObject = {}
   for (const prop in object) {
-    newObject[prop] = f(object[prop])
+    newObject[prop] = f(object[prop], prop)
   }
   return newObject
 }

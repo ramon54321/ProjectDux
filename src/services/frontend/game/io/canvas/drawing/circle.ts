@@ -1,4 +1,4 @@
-import { mapPointToCanvas, mapValueToCanvas, mapAngleToCanvas } from './pointMapping'
+import { mapPointToCanvas, mapValueToCanvas, mapAngleToCanvas } from '../pointMapping'
 import { Vector2 } from '@common/game/types/Vector'
 
 export function drawCircle(

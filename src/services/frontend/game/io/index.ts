@@ -1,15 +1,17 @@
 import { EventEmitter } from 'events'
-import { DiscreetState, AbsoluteState } from '@common/game/types/State'
-import { ClientEventEmitter } from '@frontend/game/types/Events'
-import Canvas from './canvas'
+import { IOController } from '@frontend/game/types/IO'
+import { InterfaceEventEmitter } from '@frontend/game/types/Events'
+import CanvasIOController from './canvas'
 
-const events: ClientEventEmitter = new EventEmitter()
+const interfaceState = {
 
-function render(discreetState: DiscreetState, absoluteState: AbsoluteState) {
-  Canvas.render(discreetState, absoluteState, events)
 }
+const interfaceEvents: InterfaceEventEmitter = new EventEmitter()
+
+const controller: IOController = new CanvasIOController(interfaceState, interfaceEvents)
 
 export default {
-  render,
-  events,
+  controller,
+  interfaceEvents,
+  interfaceState,
 }

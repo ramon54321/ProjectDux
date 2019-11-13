@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import { mapPointToCanvas } from './pointMapping'
+import { mapPointToCanvas } from '../pointMapping'
 import { Vector2 } from '@common/game/types/Vector'
 
 export function drawLine(
