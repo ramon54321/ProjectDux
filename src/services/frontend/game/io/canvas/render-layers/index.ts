@@ -1,5 +1,6 @@
 import { State } from '@common/game/types/State'
 import { InterfaceEventEmitter } from '@frontend/game/types/Events'
+import { InterfaceState } from '@frontend/game/types/InterfaceState'
 
 export default abstract class RenderLayer {
   context: CanvasRenderingContext2D
@@ -9,9 +10,9 @@ export default abstract class RenderLayer {
   }
 
   abstract render(
-    discreetState: State<'Discreet'>,
+    continuousState: State<'Continuous'>,
     absoluteState: State<'Absolute'>,
-    interfaceState: any,
+    interfaceState: InterfaceState,
     interfaceEvents: InterfaceEventEmitter,
   )
 }

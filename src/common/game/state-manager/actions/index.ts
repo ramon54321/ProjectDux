@@ -3,7 +3,7 @@ import { Vector2 } from '@common/game/types/Vector'
 import { AnyWaypoint } from '@common/game/types/Waypoint'
 import { Action, ActionMap } from '@common/game/types/Actions'
 
-const fullState = (state: State<'Discreet'>) => ({
+const fullState = (state: State<'Continuous'>) => ({
   type: 'fullState',
   payload: state,
 })

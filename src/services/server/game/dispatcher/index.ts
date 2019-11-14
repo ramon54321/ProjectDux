@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import State from '@common/game/state'
+import StateManager from '@common/game/state-manager'
 import { broadcast, send } from '@server/model/sockets'
 import ServerState from '@server/game/state'
 
@@ -9,12 +9,12 @@ function dispatch(action: AnyAction) {
 }
 
 function dispatchFullState() {
-  const action = State.Actions.fullState(ServerState.store.getState())
+  const action = StateManager.Actions.fullState(ServerState.store.getState())
   broadcast(JSON.stringify(action))
 }
 
 function dispatchFullStateToSocket(socketId: string) {
-  const action = State.Actions.fullState(ServerState.store.getState())
+  const action = StateManager.Actions.fullState(ServerState.store.getState())
   send(socketId, JSON.stringify(action))
 }
 

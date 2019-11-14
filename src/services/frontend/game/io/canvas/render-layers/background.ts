@@ -3,6 +3,7 @@ import { State } from '@common/game/types/State'
 import { InterfaceEventEmitter } from '@frontend/game/types/Events'
 import { drawGrid } from '../drawing/grid'
 import RenderLayer from '.'
+import { InterfaceState } from '@frontend/game/types/InterfaceState'
 
 export default class BackgroundRenderLayer extends RenderLayer {
   gradient: CanvasGradient
@@ -22,9 +23,9 @@ export default class BackgroundRenderLayer extends RenderLayer {
   }
 
   render(
-    discreetState: State<'Discreet'>,
+    continuousState: State<'Continuous'>,
     absoluteState: State<'Absolute'>,
-    interfaceState: any,
+    interfaceState: InterfaceState,
     interfaceEvents: InterfaceEventEmitter,
   ) {
     this.context.fillStyle = this.gradient

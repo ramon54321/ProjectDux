@@ -1,14 +1,15 @@
 import { Specs } from "../types/Specs"
 import { UnitType } from "../types/State"
 
-const specsMap: SpecMap = {
-  Rifleman: {
-    speed: 5,
-    turnRadius: 5,
-  }
+const Rifleman = {
+  displayName: 'Rifleman',
+  speed: 5,
+  turnRadius: 5,
 }
 
-type SpecMap = { [P in keyof Specs]: Specs[P] }
+const specsMap: { [P in keyof Specs]: Specs[P] } = {
+  Rifleman,
+}
 
 function getSpecs<T extends UnitType>(type: T): Specs[T] {
   return specsMap[type]

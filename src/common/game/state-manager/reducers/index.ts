@@ -5,7 +5,7 @@ import { ReducerMap } from '@common/game/types/Actions'
 const reducers: ReducerMap = {
   spawn: (current, payload) => {
     const { id, name, type, level, position } = payload
-    const unit: StateFragments<'Discreet'>['Unit'] = {
+    const unit: StateFragments<'Continuous'>['Unit'] = {
       id: id,
       type: type,
       name: name,
@@ -37,14 +37,14 @@ const reducers: ReducerMap = {
 }
 
 const unitsReducer = (
-  current: { [key: string]: StateFragments<'Discreet'>['Unit'] } = {},
+  current: { [key: string]: StateFragments<'Continuous'>['Unit'] } = {},
   action,
-): { [key: string]: StateFragments<'Discreet'>['Unit'] } => {
+): { [key: string]: StateFragments<'Continuous'>['Unit'] } => {
   const reducer = reducers[action.type]
   return reducer ? reducer(current, action.payload) : current
 }
 
-export default combineReducers<State<'Discreet'>>({
+export default combineReducers<State<'Continuous'>>({
   world: combineReducers({
     units: unitsReducer,
   }),

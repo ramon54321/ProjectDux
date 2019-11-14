@@ -10,6 +10,7 @@ import { InterfaceEventEmitter } from '@frontend/game/types/Events'
 import RenderLayer from '.'
 import { drawArc } from '../drawing/circle'
 import { drawPath } from '../drawing/line'
+import { InterfaceState } from '@frontend/game/types/InterfaceState'
 
 export default class WaypointsRenderLayer extends RenderLayer {
   constructor(context: CanvasRenderingContext2D) {
@@ -17,17 +18,17 @@ export default class WaypointsRenderLayer extends RenderLayer {
   }
 
   render(
-    discreetState: State<'Discreet'>,
+    continuousState: State<'Continuous'>,
     absoluteState: State<'Absolute'>,
-    interfaceState: any,
+    interfaceState: InterfaceState,
     interfaceEvents: InterfaceEventEmitter,
   ) {
     this.context.strokeStyle = 'rgba(255, 255, 255, 0.35)'
 
-    const unitsMap = R.path(['world', 'units'], discreetState)
+    const unitsMap = R.path(['world', 'units'], continuousState)
     const units = R.keys(unitsMap).map(
       key => unitsMap[key],
-    ) as StateFragments<'Discreet'>['Unit'][]
+    ) as StateFragments<'Continuous'>['Unit'][]
     units.forEach(unit => {
       const waypoints: AnyWaypoint[] = unit.waypoints
       Map.interval(waypoints, (waypointA, waypointB) => {

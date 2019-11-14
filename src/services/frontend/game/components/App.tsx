@@ -1,33 +1,29 @@
 import * as React from 'react'
 import * as R from 'ramda'
 import { State } from '@common/game/types/State'
-import { Vector2 } from '@common/game/types/Vector'
 import { InterfaceEventEmitter } from '@frontend/game/types/Events'
 import RequestActions from '@frontend/game/request-actions'
 import Dispatcher from '@frontend/game/dispatcher'
 import ClientState from '@frontend/game/state'
+import { InterfaceState } from '../types/InterfaceState'
 
 export interface AppProps {
   interfaceEvents: InterfaceEventEmitter
 }
 
 export interface AppState {
-  discreetState: State<'Discreet'>
+  continuousState: State<'Continuous'>
   absoluteState: State<'Absolute'>
-  viewState: ViewState
+  interfaceState: InterfaceState
   x: number
   y: number
-}
-
-export interface ViewState {
-  mouseWorldPosition: Vector2
 }
 
 export default class App extends React.Component<AppProps, AppState> {
   constructor(props) {
     super(props)
     this.state = {
-      viewState: {
+      interfaceState: {
         mouseWorldPosition: {
           x: 0,
           y: 0,
@@ -36,11 +32,9 @@ export default class App extends React.Component<AppProps, AppState> {
     } as AppState
 
     this.props.interfaceEvents &&
-      this.props.interfaceEvents.on('tick_ui', uiState => {
+      this.props.interfaceEvents.on('tick_ui', updatedInterfaceState => {
         this.setState({
-          viewState: {
-            mouseWorldPosition: uiState.mouseWorldPosition,
-          },
+          interfaceState: updatedInterfaceState,
         })
       })
 
@@ -48,9 +42,9 @@ export default class App extends React.Component<AppProps, AppState> {
     this.handleChangeY = this.handleChangeY.bind(this)
   }
 
-  setDiscreetState(discreetState: State<'Discreet'>) {
+  setContinuousState(continuousState: State<'Continuous'>) {
     this.setState({
-      discreetState: discreetState,
+      continuousState: continuousState,
     })
   }
   setAbsoluteState(absoluteState: State<'Absolute'>) {
@@ -101,15 +95,13 @@ export default class App extends React.Component<AppProps, AppState> {
         <div>
           <pre>
             <code>
-              MouseX: {this.state.viewState.mouseWorldPosition.x}
-              <br />
-              MouseY: {this.state.viewState.mouseWorldPosition.y}
+              {JSON.stringify(this.state.interfaceState, null, 2)}
             </code>
           </pre>
         </div>
-        <h3>Discreet State</h3>
+        <h3>Continuous State</h3>
         <pre>
-          <code>{JSON.stringify(this.state.discreetState, null, 2)}</code>
+          <code>{JSON.stringify(this.state.continuousState, null, 2)}</code>
         </pre>
         <h3>Absolute State</h3>
         <pre>

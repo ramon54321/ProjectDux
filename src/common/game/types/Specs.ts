@@ -1,4 +1,5 @@
 interface UnitSpecs {
+  displayName: string
   speed: number
   turnRadius: number
 }

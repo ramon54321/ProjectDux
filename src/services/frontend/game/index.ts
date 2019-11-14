@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { State } from '@common/game/types/State'
-import CommonState from '@common/game/state'
+import StateManager from '@common/game/state-manager'
 import socket from '@frontend/common/socket'
 import App from '@frontend/game/components/App'
 import FrontendState from '@frontend/game/state'
@@ -31,15 +31,15 @@ const app = ReactDOM.hydrate(
 )
 
 function tick() {
-  const discreetState: State<'Discreet'> = FrontendState.getModelStore().getState()
-  const absoluteState: State<'Absolute'> = CommonState.Processor.getAbsoluteState(
-    discreetState,
+  const continuousState: State<'Continuous'> = FrontendState.getModelStore().getState()
+  const absoluteState: State<'Absolute'> = StateManager.Processor.getAbsoluteState(
+    continuousState,
   )
 
-  app.setDiscreetState(discreetState)
+  app.setContinuousState(continuousState)
   app.setAbsoluteState(absoluteState)
 
-  IO.controller.render(discreetState, absoluteState)
+  IO.controller.render(continuousState, absoluteState)
 
   window.requestAnimationFrame(tick)
 }

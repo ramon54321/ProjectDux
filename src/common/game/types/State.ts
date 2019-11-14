@@ -1,7 +1,7 @@
 import { AnyWaypoint } from './Waypoint'
 import { Vector2 } from './Vector'
 
-type Movable<S extends StateType> = S extends 'Discreet' ? {
+type Movable<S extends StateType> = S extends 'Continuous' ? {
   waypoints: AnyWaypoint[]
 } : {
   position: Vector2
@@ -25,7 +25,7 @@ export interface StateFragments<S extends StateType> {
   Unit: Unit<S, UnitType>
 }
 
-type StateType = 'Discreet' | 'Absolute'
+type StateType = 'Continuous' | 'Absolute'
 
 export interface State<S extends StateType> {
   world: {

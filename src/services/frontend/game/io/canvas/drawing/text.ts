@@ -9,3 +9,11 @@ export function drawText(
   const mappedPosition = mapPointToCanvas(position)
   context.fillText(text, mappedPosition.x, mappedPosition.y)
 }
+
+export function drawTextInScreenSpace(
+  context: CanvasRenderingContext2D,
+  text: string,
+  position: Vector2,
+) {
+  context.fillText(text, position.x, position.y)
+}

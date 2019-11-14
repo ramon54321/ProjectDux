@@ -1,4 +1,4 @@
-import StateManager from '@common/game/state'
+import StateManager from '@common/game/state-manager'
 import { State } from '@common/game/types/State'
 
 const store = StateManager.createStore()

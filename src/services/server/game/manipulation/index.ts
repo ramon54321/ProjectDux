@@ -4,7 +4,7 @@ import {
   SocketRequestAction,
 } from '@common/game/types/RequestActions'
 
-import CommonState from '@common/game/state'
+import StateManager from '@common/game/state-manager'
 import ServerState from '@server/game/state'
 import Specs from '@common/game/specs'
 import Path from '@server/game/path'
@@ -38,7 +38,7 @@ const requestActions: RequestReactionMap = {
       ...waypoint,
       timestamp: waypoint.timestamp * 1000 + timestamp,
     }))
-    Dispatcher.dispatch(CommonState.Actions.setWaypoints(id, waypoints))
+    Dispatcher.dispatch(StateManager.Actions.setWaypoints(id, waypoints))
   },
 }
 

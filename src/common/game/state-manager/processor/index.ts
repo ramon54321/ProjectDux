@@ -5,12 +5,12 @@ import {
   StateFragments,
 } from '@common/game/types/State'
 
-function getAbsoluteState(discreetState: State<'Discreet'>): State<'Absolute'> {
+function getAbsoluteState(continuousState: State<'Continuous'>): State<'Absolute'> {
   const timestamp = Date.now()
   return {
     world: {
-      units: Map.props<StateFragments<'Discreet'>['Unit']>(
-        discreetState.world.units,
+      units: Map.props<StateFragments<'Continuous'>['Unit']>(
+        continuousState.world.units,
         unit => ({
           id: unit.id,
           type: unit.type,

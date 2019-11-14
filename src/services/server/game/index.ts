@@ -2,7 +2,7 @@ import Queue from '@common/game/utils/Queue'
 import Manipulation from '@server/game/manipulation'
 import '@server/game/socket-events'
 
-import CommonState from '@common/game/state'
+import StateManager from '@common/game/state-manager'
 import ServerState from '@server/game/state'
 import { generateShortId } from '../../../common/game/utils/id'
 import Dispatcher from './dispatcher'
@@ -16,19 +16,19 @@ export const socketRequestActionQueue = new Queue<SocketRequestAction>()
 const tickNumberProcesses = {
   3: () => {
     Dispatcher.dispatch(
-      CommonState.Actions.spawn(generateShortId(), 'Rifleman', generateRandomName(), 2, {
+      StateManager.Actions.spawn(generateShortId(), 'Rifleman', generateRandomName(), 2, {
         x: 0,
         y: 0,
       }),
     )
     Dispatcher.dispatch(
-      CommonState.Actions.spawn(generateShortId(), 'Rifleman', generateRandomName(), 1, {
+      StateManager.Actions.spawn(generateShortId(), 'Rifleman', generateRandomName(), 1, {
         x: 0,
         y: 0,
       }),
     )
     Dispatcher.dispatch(
-      CommonState.Actions.spawn(generateShortId(), 'Rifleman', generateRandomName(), 4, {
+      StateManager.Actions.spawn(generateShortId(), 'Rifleman', generateRandomName(), 4, {
         x: 0,
         y: 0,
       }),
@@ -69,7 +69,7 @@ const tickNumberProcesses = {
       ...waypoint,
       timestamp: waypoint.timestamp * 1000 + timestamp,
     }))
-    Dispatcher.dispatch(CommonState.Actions.setWaypoints(id, waypoints))
+    Dispatcher.dispatch(StateManager.Actions.setWaypoints(id, waypoints))
   },
   8: () => {
     const absoluteState = ServerState.getAbsoluteState()
@@ -98,7 +98,7 @@ const tickNumberProcesses = {
       ...waypoint,
       timestamp: waypoint.timestamp * 1000 + timestamp,
     }))
-    Dispatcher.dispatch(CommonState.Actions.setWaypoints(id, waypoints))
+    Dispatcher.dispatch(StateManager.Actions.setWaypoints(id, waypoints))
   },
   9: () => {
     const absoluteState = ServerState.getAbsoluteState()
@@ -127,7 +127,7 @@ const tickNumberProcesses = {
       ...waypoint,
       timestamp: waypoint.timestamp * 1000 + timestamp,
     }))
-    Dispatcher.dispatch(CommonState.Actions.setWaypoints(id, waypoints))
+    Dispatcher.dispatch(StateManager.Actions.setWaypoints(id, waypoints))
   },
   22: () => {
     // const absoluteState = ServerState.getAbsoluteState()
