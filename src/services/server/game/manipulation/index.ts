@@ -27,17 +27,16 @@ const requestActions: RequestReactionMap = {
     const { speed, turnRadius } = Specs.getSpecs(type)
 
     const timestamp = Date.now()
-    const waypoints = Path.pointsToWaypoints(
-      [
-        position,
-        target,
-      ],
+    const waypoints = Path.create(
       speed,
       turnRadius,
-    ).map(waypoint => ({
-      ...waypoint,
-      timestamp: waypoint.timestamp * 1000 + timestamp,
-    }))
+      3,
+      3,
+    )
+    // .map(waypoint => ({
+    //   ...waypoint,
+    //   timestamp: waypoint.timestamp * 1000 + timestamp,
+    // }))
     Dispatcher.dispatch(StateManager.Actions.setWaypoints(id, waypoints))
   },
 }

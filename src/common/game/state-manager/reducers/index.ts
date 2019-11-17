@@ -14,6 +14,8 @@ const reducers: ReducerMap = {
         {
           timestamp: 0,
           type: 'Point',
+          speed: 0,
+          distance: 0,
           position: {
             x: position.x,
             y: position.y,

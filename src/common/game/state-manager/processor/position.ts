@@ -1,8 +1,44 @@
 import Interpolation from '@common/game/math/Interpolation'
 import Vector from '@common/game/math/Vector'
-import { AnyWaypoint } from '@common/game/types/Waypoint'
+import { AnyWaypoint, Waypoint } from '@common/game/types/Waypoint'
 import { Vector2 } from '@common/game/types/Vector'
 import WaypointTypes from '@common/game/types/Waypoint'
+
+function mapPointWaypoint(
+  waypointA: AnyWaypoint,
+  waypointB: any,
+  timestamp: number,
+): Vector2 {
+  const timeSinceWaypointA = (timestamp - waypointA.timestamp) / 1000
+  const timeDelta = (waypointB.timestamp - waypointA.timestamp) / 1000
+  const acceleration = (waypointB.speed - waypointA.speed) / timeDelta
+  const distance = (waypointA.speed * timeSinceWaypointA) + (acceleration * timeSinceWaypointA ** 2) / 2
+  const t = Interpolation.inverseLerp(0, waypointB.distancePreviousSection, distance)
+
+  const ix = Interpolation.lerp(waypointA.position.x, waypointB.position.x, t)
+  const iy = Interpolation.lerp(waypointA.position.y, waypointB.position.y, t)
+  return { x: ix, y: iy }
+}
+
+function mapRadialWaypoint(
+  waypointA: AnyWaypoint,
+  waypointB: Waypoint<'Radial'>,
+  timestamp: number,
+): Vector2 {
+  const t = Interpolation.inverseLerp(
+    waypointA.timestamp,
+    waypointB.timestamp,
+    timestamp,
+  )
+  const angle = Interpolation.lerp(
+    waypointB.angleStart,
+    waypointB.angleEnd,
+    t,
+  )
+  const offset = Vector.scale(Vector.angleVector(angle), waypointB.radius)
+  const position = Vector.add(offset, waypointB.pivot)
+  return position
+}
 
 export function mapPositionFromWaypoints(
   waypoints: AnyWaypoint[],
@@ -37,27 +73,8 @@ export function mapPositionFromWaypoints(
 
   // Timestamp is somewhere between two waypoints
   if (WaypointTypes.isPointWaypoint(waypointB)) {
-    const t = Interpolation.inverseLerp(
-      waypointA.timestamp,
-      waypointB.timestamp,
-      timestamp,
-    )
-    const ix = Interpolation.lerp(waypointA.position.x, waypointB.position.x, t)
-    const iy = Interpolation.lerp(waypointA.position.y, waypointB.position.y, t)
-    return { x: ix, y: iy }
+    return mapPointWaypoint(waypointA, waypointB, timestamp)
   } else if (WaypointTypes.isRadialWaypoint(waypointB)) {
-    const t = Interpolation.inverseLerp(
-      waypointA.timestamp,
-      waypointB.timestamp,
-      timestamp,
-    )
-    const angle = Interpolation.lerp(
-      waypointB.angleStart,
-      waypointB.angleEnd,
-      t,
-    )
-    const offset = Vector.scale(Vector.angleVector(angle), waypointB.radius)
-    const position = Vector.add(offset, waypointB.pivot)
-    return position
+    return mapRadialWaypoint(waypointA, waypointB, timestamp)
   }
 }
